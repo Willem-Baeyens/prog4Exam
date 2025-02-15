@@ -12,9 +12,11 @@ public:
 	TextRenderer(const std::string& text, Font* fontPtr, GameObject* gameObjectPtr);
 
 	virtual void Render() const override;
-	virtual void Update() override;
+
+	void SetText(const std::string& text);
 private:
-	bool						m_NeedsUpdate;
+	void UpdateTexture();
+
 	std::string					m_Text;
 	GameObject*					m_GameObjectPtr;
 	Font*						m_FontPtr;

@@ -45,7 +45,7 @@ void PrintSDLVersion()
 }
 
 Minigin::Minigin(const std::string &dataPath):
-m_MsPerFrame{1/60.f}
+m_MsPerFrame{7}
 {
 	PrintSDLVersion();
 	

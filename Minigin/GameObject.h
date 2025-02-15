@@ -24,21 +24,26 @@ public:
 	template<class ComponentType, class... Args>
 	void AddComponent(Args&&... args)
 	{
-		m_Components.push_back(new ComponentType(std::forward<Args>(args)...,this));
+		m_Components.push_back(std::make_unique<ComponentType>(std::forward<Args>(args)...,this));
 	}
 
 	template<class ComponentType>
-	ComponentType GetComponent() const
+	ComponentType* GetComponent() const
 	{
-		for (const auto& c : m_Components)
+		for (const auto& component : m_Components)
 		{
-			c;
+			ComponentType* result{ dynamic_cast<ComponentType*>(component.get()) };
+			if (result != nullptr)
+			{
+				return result;
+			}
 		}
+		return nullptr;
 	}
 
 	Transform m_Transform{};
 private:
-	std::vector<Component*> m_Components{};
+	std::vector<std::unique_ptr<Component>> m_Components{};
 };
 
 

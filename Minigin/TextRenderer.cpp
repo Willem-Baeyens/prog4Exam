@@ -8,9 +8,9 @@
 #include <iostream>
 
 TextRenderer::TextRenderer(const std::string& text, Font* fontPtr, GameObject* gameObjectPtr):
-	m_NeedsUpdate{ true },m_Text {text}, m_FontPtr{ fontPtr },m_GameObjectPtr{ gameObjectPtr },m_TextTexture{nullptr}
+	m_Text {text}, m_FontPtr{ fontPtr },m_GameObjectPtr{ gameObjectPtr },m_TextTexture{nullptr}
 {
-
+	UpdateTexture();
 }
 
 void TextRenderer::Render() const
@@ -22,23 +22,25 @@ void TextRenderer::Render() const
 	}
 }
 
-void TextRenderer::Update()
+void TextRenderer::SetText(const std::string& text)
 {
-	if (m_NeedsUpdate)
+	m_Text = text;
+	UpdateTexture();
+}
+
+void TextRenderer::UpdateTexture()
+{
+	const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
+	const auto surface = TTF_RenderText_Blended(m_FontPtr->GetFont(), m_Text.c_str(), color);
+	if (surface == nullptr)
 	{
-		const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
-		const auto surface = TTF_RenderText_Blended(m_FontPtr->GetFont(), m_Text.c_str(), color);
-		if (surface == nullptr)
-		{
-			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
-		}
-		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surface);
-		if (texture == nullptr)
-		{
-			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
-		}
-		SDL_FreeSurface(surface);
-		m_TextTexture = std::make_unique<Texture2D>(texture);
-		m_NeedsUpdate = false;
+		throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 	}
+	auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surface);
+	if (texture == nullptr)
+	{
+		throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+	}
+	SDL_FreeSurface(surface);
+	m_TextTexture = std::make_unique<Texture2D>(texture);
 }

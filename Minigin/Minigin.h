@@ -17,5 +17,5 @@ public:
 	Minigin& operator=(Minigin&& other) = delete;
 
 private:
-	const std::chrono::duration<float> m_MsPerFrame;
+	const std::chrono::milliseconds m_MsPerFrame;
 };
