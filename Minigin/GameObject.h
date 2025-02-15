@@ -1,32 +1,45 @@
 #pragma once
 #include <memory>
+#include <vector>
+#include <algorithm>
+#include <initializer_list>
 #include "Transform.h"
+#include "Component.h"	
 
-namespace dae
+class GameObject final
 {
-	class Texture2D;
+public:
+	GameObject() = default;
+	~GameObject();
+	GameObject(const GameObject& other) = delete;
+	GameObject(GameObject&& other) = delete;
+	GameObject& operator=(const GameObject& other) = delete;
+	GameObject& operator=(GameObject&& other) = delete;
 
-	// todo: this should become final.
-	class GameObject 
+	void Update();
+	void FixedUpdate();
+	void Render() const;
+
+
+	template<class ComponentType, class... Args>
+	void AddComponent(Args&&... args)
 	{
-	public:
-		virtual void Update();
-		virtual void FixedUpdate();
-		virtual void Render() const;
+		m_Components.push_back(new ComponentType(std::forward<Args>(args)...,this));
+	}
 
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
+	template<class ComponentType>
+	ComponentType GetComponent() const
+	{
+		for (const auto& c : m_Components)
+		{
+			c;
+		}
+	}
 
-		GameObject() = default;
-		virtual ~GameObject();
-		GameObject(const GameObject& other) = delete;
-		GameObject(GameObject&& other) = delete;
-		GameObject& operator=(const GameObject& other) = delete;
-		GameObject& operator=(GameObject&& other) = delete;
+	Transform m_Transform{};
+private:
+	std::vector<Component*> m_Components{};
+};
 
-	private:
-		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
-	};
-}
+
+

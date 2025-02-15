@@ -1,3 +1,4 @@
+#pragma once
 #include <stdexcept>
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
@@ -10,6 +11,8 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Time.h"
+#include "Font.h"
 
 SDL_Window* g_window{};
 
@@ -41,8 +44,8 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-dae::Minigin::Minigin(const std::string &dataPath):
-m_FixedTimeStep{1/60.f},m_MsPerFrame{1/60.f}
+Minigin::Minigin(const std::string &dataPath):
+m_MsPerFrame{1/60.f}
 {
 	PrintSDLVersion();
 	
@@ -69,7 +72,7 @@ m_FixedTimeStep{1/60.f},m_MsPerFrame{1/60.f}
 	ResourceManager::GetInstance().Init(dataPath);
 }
 
-dae::Minigin::~Minigin()
+Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(g_window);
@@ -77,42 +80,35 @@ dae::Minigin::~Minigin()
 	SDL_Quit();
 }
 
-void dae::Minigin::Run(const std::function<void()>& load)
+void Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
+	auto& time = Time::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
-	while (doContinue)
-	{
-		doContinue = input.ProcessInput();
-		sceneManager.Update();
-		renderer.Render();
-	}
-
-
-	auto last_time = std::chrono::high_resolution_clock::now();
+	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.0f;
 	while (doContinue)
 	{
-		const auto current_time = std::chrono::high_resolution_clock::now();
-		const float delta_time = std::chrono::duration<float>(current_time - last_time).count();
-		last_time = current_time;
-		lag += delta_time;
+		const auto currentTime = std::chrono::high_resolution_clock::now();
+		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
+		time.SetDeltaTime(deltaTime);
+		lastTime = currentTime;
+		lag += deltaTime;
 
 		doContinue = input.ProcessInput();
-		while (lag >= m_FixedTimeStep)
+		while (lag >= time.GetFixedDeltaTime())
 		{
 			sceneManager.FixedUpdate();
-			lag -= m_FixedTimeStep;
+			lag -= time.GetFixedDeltaTime();
 		}
 		sceneManager.Update();
 		renderer.Render();
-		const auto sleep_time = current_time + m_MsPerFrame - std::chrono::high_resolution_clock::now();
+		const auto sleep_time = currentTime + m_MsPerFrame - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleep_time);
 	}
 
