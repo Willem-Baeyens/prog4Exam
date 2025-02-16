@@ -9,6 +9,14 @@ void SceneManager::Update()
 	}
 }
 
+void SceneManager::LateUpdate()
+{
+	for (auto& scene : m_scenes)
+	{
+		scene->LateUpdate();
+	}
+}
+
 void SceneManager::FixedUpdate()
 {
 	for (auto& scene : m_scenes)

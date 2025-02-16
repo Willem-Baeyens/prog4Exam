@@ -13,6 +13,7 @@
 #include "ResourceManager.h"
 #include "Time.h"
 #include "Font.h"
+#include "Texture2D.h"
 
 SDL_Window* g_window{};
 
@@ -107,6 +108,7 @@ void Minigin::Run(const std::function<void()>& load)
 			lag -= time.GetFixedDeltaTime();
 		}
 		sceneManager.Update();
+		sceneManager.LateUpdate();
 		renderer.Render();
 		const auto sleep_time = currentTime + m_MsPerFrame - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleep_time);

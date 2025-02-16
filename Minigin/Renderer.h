@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include "Singleton.h"
 
-
 class Texture2D;
 /**
  * Simple RAII wrapper for the SDL renderer

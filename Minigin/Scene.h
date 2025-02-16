@@ -12,6 +12,7 @@ public:
 	void RemoveAll();
 
 	void Update();
+	void LateUpdate();
 	void FixedUpdate();
 	void Render() const;
 

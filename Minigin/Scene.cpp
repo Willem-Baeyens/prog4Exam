@@ -33,6 +33,14 @@ void Scene::Update()
 	}
 }
 
+void Scene::LateUpdate()
+{
+	for (auto& object : m_objects)
+	{
+		object->LateUpdate();
+	}
+}
+
 void Scene::FixedUpdate()
 {
 	for (auto& object : m_objects)

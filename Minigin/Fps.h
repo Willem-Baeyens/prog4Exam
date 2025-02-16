@@ -10,11 +10,12 @@ public:
 	Fps(GameObject* gameObjectPtr);
 
 	virtual void Update() override;
+	virtual void LateUpdate() override;
 private:
 	GameObject*					m_GameObjectPtr;
 	TextRenderer*				m_TextRendererPtr;
 	Time&						m_Time;
 
-	std::array<float, 20>		m_DeltaTimes;
+	std::array<float, 10>		m_DeltaTimes;
 	std::size_t					m_DeltaTimeIndex;
 };

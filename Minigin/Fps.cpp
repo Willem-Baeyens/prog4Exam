@@ -14,12 +14,23 @@ Fps::Fps(GameObject* gameObjectPtr):
 
 void Fps::Update()
 {
+	if (m_TextRendererPtr == nullptr) return;
+
 	m_DeltaTimes[m_DeltaTimeIndex] = m_Time.GetDeltaTime();
 
 	if (++m_DeltaTimeIndex == m_DeltaTimes.size() - 1)
 	{
 		const float totalDeltaTime{std::accumulate(m_DeltaTimes.begin(),m_DeltaTimes.end(),0.f)};
-		m_TextRendererPtr->SetText("FPS: " + std::to_string(m_DeltaTimes.size()/totalDeltaTime));
+		
+		m_TextRendererPtr->SetText("FPS: " + std::to_string(m_DeltaTimes.size()/totalDeltaTime).substr(0,5));
 		m_DeltaTimeIndex = 0;
+	}
+}
+
+void Fps::LateUpdate()
+{
+	if (m_TextRendererPtr->IsFlaggedForDeletion())
+	{
+		m_TextRendererPtr = nullptr;
 	}
 }

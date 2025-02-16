@@ -20,5 +20,5 @@ private:
 	std::string					m_Text;
 	GameObject*					m_GameObjectPtr;
 	Font*						m_FontPtr;
-	std::unique_ptr<Texture2D>	m_TextTexture;
+	std::unique_ptr<Texture2D>	m_TextTextureUptr;
 };

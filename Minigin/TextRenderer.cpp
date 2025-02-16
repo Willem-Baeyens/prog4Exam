@@ -8,17 +8,17 @@
 #include <iostream>
 
 TextRenderer::TextRenderer(const std::string& text, Font* fontPtr, GameObject* gameObjectPtr):
-	m_Text {text}, m_FontPtr{ fontPtr },m_GameObjectPtr{ gameObjectPtr },m_TextTexture{nullptr}
+	m_Text {text}, m_FontPtr{ fontPtr },m_GameObjectPtr{ gameObjectPtr },m_TextTextureUptr{nullptr}
 {
 	UpdateTexture();
 }
 
 void TextRenderer::Render() const
 {
-	if (m_TextTexture != nullptr)
+	if (m_TextTextureUptr != nullptr)
 	{
 		const auto& pos = m_GameObjectPtr->m_Transform.GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
+		Renderer::GetInstance().RenderTexture(*m_TextTextureUptr, pos.x, pos.y);
 	}
 }
 
@@ -30,6 +30,8 @@ void TextRenderer::SetText(const std::string& text)
 
 void TextRenderer::UpdateTexture()
 {
+	if (m_Text.empty()) return;
+
 	const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
 	const auto surface = TTF_RenderText_Blended(m_FontPtr->GetFont(), m_Text.c_str(), color);
 	if (surface == nullptr)
@@ -42,5 +44,5 @@ void TextRenderer::UpdateTexture()
 		throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 	}
 	SDL_FreeSurface(surface);
-	m_TextTexture = std::make_unique<Texture2D>(texture);
+	m_TextTextureUptr = std::make_unique<Texture2D>(texture);
 }
