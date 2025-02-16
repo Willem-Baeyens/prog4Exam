@@ -48,17 +48,9 @@ public:
 
 	template<class ComponentType>
 		requires std::derived_from<ComponentType, Component>
-	bool IsComponentAdded() const
+	bool HasComponent() const
 	{
-		for (const auto& component : m_Components)
-		{
-			ComponentType* result{ dynamic_cast<ComponentType*>(component.get()) };
-			if (result != nullptr)
-			{
-				return true;
-			}
-		}
-		return false;
+		return GetComponent<ComponentType>() != nullptr;
 	}
 
 	template<class ComponentType>
