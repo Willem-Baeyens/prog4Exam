@@ -23,6 +23,5 @@ private:
 
 	std::map<std::string, std::unique_ptr<Texture2D>> m_LoadedTextures;
 	std::map<std::pair<std::string, uint8_t>, std::unique_ptr<Font>> m_LoadedFonts;
-
 };
 

@@ -107,6 +107,7 @@ void Minigin::Run(const std::function<void()>& load)
 			sceneManager.FixedUpdate();
 			lag -= time.GetFixedDeltaTime();
 		}
+
 		sceneManager.Update();
 		sceneManager.LateUpdate();
 		renderer.Render();

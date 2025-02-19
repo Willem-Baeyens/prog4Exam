@@ -41,21 +41,24 @@ void GameObject::Render() const
 	}
 }
 
+void GameObject::FlagForDeletion()
+{
+	m_DeletionFlag = true;
+}
+
+bool GameObject::IsFlaggedForDeletion() const
+{
+	return m_DeletionFlag;
+}
+
 void GameObject::RemoveComponent(Component* componentToRemove)
 {
-	//std::for_each(std::remove_if(m_Components.begin(), m_Components.end(), [componentToRemove](std::unique_ptr<Component> component) {return component.get() == componentToRemove; }),
-	//	m_Components.end(), [componentToRemove]() {componentToRemove->FlagForDeletion(); });
-	for (const auto& component : m_Components)
-	{
-		if (component.get() == componentToRemove)
-		{
-			componentToRemove->FlagForDeletion();
-		}
-	}
+	if (componentToRemove->GetOwner() == this)
+		componentToRemove->FlagForDeletion();
 }
 
 void GameObject::DeleteComponents()
 {
-	auto startOfFlaggedComponents{ std::find_if(m_Components.begin(), m_Components.end(), [](std::unique_ptr<Component>& component) {return component->IsFlaggedForDeletion(); }) };
+	auto startOfFlaggedComponents{std::partition(m_Components.begin(),m_Components.end(),[](const std::unique_ptr<Component>& component) {return !component->IsFlaggedForDeletion(); })};
 	m_Components.erase(startOfFlaggedComponents, m_Components.end());
 }

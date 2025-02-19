@@ -8,10 +8,9 @@ class Texture2D;
 class TextureRenderer final : public Component
 {
 public:
-	TextureRenderer(Texture2D* texturePtr, GameObject* gameObjectPtr);
+	TextureRenderer(Texture2D* texturePtr, const GameObject* ownerPtr);
 
 	virtual void Render() const override;
 private:
-	GameObject* m_GameObjectPtr;
 	Texture2D*	m_TexturePtr;
 };

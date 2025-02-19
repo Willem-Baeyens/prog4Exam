@@ -7,12 +7,10 @@ class GameObject;
 class Fps final : public Component
 {
 public:
-	Fps(GameObject* gameObjectPtr);
+	Fps(const GameObject* ownerPtr);
 
 	virtual void Update() override;
-	virtual void LateUpdate() override;
 private:
-	GameObject*					m_GameObjectPtr;
 	TextRenderer*				m_TextRendererPtr;
 	Time&						m_Time;
 

@@ -23,12 +23,15 @@ public:
 	void FixedUpdate();
 	void Render() const;
 
+	void FlagForDeletion();
+	bool IsFlaggedForDeletion() const;
+
 
 	template<class ComponentType, class... Args>
 		requires std::derived_from<ComponentType, Component>
 	void AddComponent(Args&&... args)
 	{
-		m_Components.push_back(std::make_unique<ComponentType>(std::forward<Args>(args)...,this));
+		m_Components.emplace_back(std::move(std::make_unique<ComponentType>(std::forward<Args>(args)...,this)));
 	}
 
 	template<class ComponentType>
@@ -53,20 +56,11 @@ public:
 		return GetComponent<ComponentType>() != nullptr;
 	}
 
-	template<class ComponentType>
-		requires std::derived_from<ComponentType, Component>
-	void RemoveComponent()
-	{
-		RemoveComponent(GetComponent<ComponentType>());
-	}
-
 	void RemoveComponent(Component* componentToRemove);
 
 	Transform m_Transform{};
 private:
 	void DeleteComponents();
 	std::vector<std::unique_ptr<Component>> m_Components{};
+	bool m_DeletionFlag{ false };
 };
-
-
-
