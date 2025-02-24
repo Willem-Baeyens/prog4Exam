@@ -4,9 +4,8 @@
 #include <sstream>
 #include <iomanip>
 
-Fps::Fps(const GameObject* ownerPtr):
+Fps::Fps(GameObject* ownerPtr):
 	Component(ownerPtr),
-	m_Time{Time::GetInstance()},
 	m_TextRendererPtr{ownerPtr->GetComponent<TextRenderer>()},
 	m_DeltaTimes{},
 	m_DeltaTimeIndex{0}
@@ -18,7 +17,7 @@ void Fps::Update()
 {
 	assert(m_TextRendererPtr);
 
-	m_DeltaTimes[m_DeltaTimeIndex] = m_Time.GetDeltaTime();
+	m_DeltaTimes[m_DeltaTimeIndex] = Time::GetInstance().GetDeltaTime();
 
 	if (++m_DeltaTimeIndex == m_DeltaTimes.size() - 1)
 	{

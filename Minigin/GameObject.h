@@ -11,7 +11,7 @@
 class GameObject final
 {
 public:
-	GameObject() = default;
+	GameObject();
 	~GameObject();
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
@@ -58,9 +58,35 @@ public:
 
 	void RemoveComponent(Component* componentToRemove);
 
-	Transform m_Transform{};
+	GameObject* GetParent() const;
+	void SetParent(GameObject* parent, bool keepWorldPosition);
+
+	size_t GetChildCount() const;
+	GameObject* GetChildAt(size_t index) const;
+
+
+	const glm::vec3& GetWorldPosition();
+	void SetWorldPosition(float x, float y, float z);
+	void SetWorldPosition(const glm::vec3& position);
+
+	const glm::vec3& GetLocalPosition() const;
+	void SetLocalPosition(float x, float y, float z);
+	void SetLocalPosition(const glm::vec3& position);
+
 private:
 	void DeleteComponents();
-	std::vector<std::unique_ptr<Component>> m_Components{};
-	bool m_DeletionFlag{ false };
+
+	bool IsChild(GameObject* object);
+	void RemoveChild(GameObject* object);
+	void AddChild(GameObject* object);
+
+	void SetWorldPositionDirty();
+	void UpdateWorldPosition();
+
+	Transform m_Transform;
+	std::vector<std::unique_ptr<Component>> m_Components;
+	std::vector<GameObject*> m_Children;
+	GameObject* m_Parent;
+	bool m_DeletionFlag;
+	bool m_WorldPositionDirty;
 };

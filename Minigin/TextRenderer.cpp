@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-TextRenderer::TextRenderer(const std::string& text, Font* fontPtr, const GameObject* ownerPtr):
+TextRenderer::TextRenderer(const std::string& text, Font* fontPtr, GameObject* ownerPtr):
 	Component(ownerPtr),
 	m_Text {text}, m_FontPtr{ fontPtr },m_TextTextureUptr{nullptr}
 {
@@ -18,7 +18,7 @@ void TextRenderer::Render() const
 {
 	if (m_TextTextureUptr != nullptr)
 	{
-		const auto& pos = GetOwner()->m_Transform.GetPosition();
+		const auto& pos = GetOwner()->GetWorldPosition();
 		Renderer::GetInstance().RenderTexture(*m_TextTextureUptr, pos.x, pos.y);
 	}
 }

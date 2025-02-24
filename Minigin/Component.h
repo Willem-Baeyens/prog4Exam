@@ -3,7 +3,6 @@ class GameObject;
 class Component
 {
 public:
-	Component(const GameObject* ownerPtr);
 	virtual ~Component() = default;
 	Component(const Component& other) = delete;
 	Component(Component&& other) = delete;
@@ -18,8 +17,12 @@ public:
 	void FlagForDeletion();
 	bool IsFlaggedForDeletion() const;
 
-	const GameObject* GetOwner() const;
+	GameObject* GetOwner() const;
+
+protected:
+	explicit Component(GameObject* ownerPtr);
+
 private:
+	GameObject* m_OwnerPtr;
 	bool m_DeletionFlag{ false };
-	const GameObject* m_OwnerPtr;
 };

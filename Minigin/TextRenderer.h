@@ -9,7 +9,7 @@ class Texture2D;
 class TextRenderer final: public Component
 {
 public:
-	TextRenderer(const std::string& text, Font* fontPtr, const GameObject* ownerPtr);
+	TextRenderer(const std::string& text, Font* fontPtr, GameObject* ownerPtr);
 
 	virtual void Render() const override;
 

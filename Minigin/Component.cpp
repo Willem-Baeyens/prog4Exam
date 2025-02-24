@@ -1,7 +1,7 @@
 #include "Component.h"
 #include "GameObject.h"
 
-Component::Component(const GameObject* ownerPtr):
+Component::Component(GameObject* ownerPtr):
 	m_OwnerPtr{ownerPtr}
 {
 	assert(m_OwnerPtr != nullptr);
@@ -17,7 +17,8 @@ bool Component::IsFlaggedForDeletion() const
 	return m_DeletionFlag;
 }
 
-const GameObject* Component::GetOwner() const
+GameObject* Component::GetOwner() const
 {
 	return m_OwnerPtr;
 }
+
