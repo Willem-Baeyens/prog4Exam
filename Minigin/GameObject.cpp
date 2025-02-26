@@ -128,18 +128,22 @@ const glm::vec3& GameObject::GetLocalPosition() const
 void GameObject::SetLocalPosition(float x, float y, float z)
 {
 	m_Transform.SetLocalPosition(x, y, z);
-	m_WorldPositionDirty = true;
+	SetWorldPositionDirty();
 }
 
 void GameObject::SetLocalPosition(const glm::vec3& position)
 {
 	m_Transform.SetLocalPosition(position);
-	m_WorldPositionDirty = true;
+	SetWorldPositionDirty();
 }
 
 void GameObject::SetWorldPositionDirty()
 {
 	m_WorldPositionDirty = true;
+	for (GameObject* child : m_Children)
+	{
+		child->SetWorldPositionDirty();
+	}
 }
 
 void GameObject::DeleteComponents()
