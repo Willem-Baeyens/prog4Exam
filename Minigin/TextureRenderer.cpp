@@ -9,7 +9,7 @@ TextureRenderer::TextureRenderer(Texture2D* texturePtr,GameObject* ownerPtr) :
 {
 }
 
-void TextureRenderer::Render() const
+void TextureRenderer::Render()
 {
 	if (m_TexturePtr != nullptr)
 	{

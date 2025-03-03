@@ -14,7 +14,7 @@ TextRenderer::TextRenderer(const std::string& text, Font* fontPtr, GameObject* o
 	UpdateTexture();
 }
 
-void TextRenderer::Render() const
+void TextRenderer::Render()
 {
 	if (m_TextTextureUptr != nullptr)
 	{

@@ -9,7 +9,7 @@ public:
 	Component& operator=(const Component& other) = delete;
 	Component& operator=(Component&& other) = delete;
 
-	virtual void Render() const {};
+	virtual void Render() {};
 	virtual void Update() {};
 	virtual void LateUpdate() {};
 	virtual void FixedUpdate() {};

@@ -11,7 +11,7 @@ class TextRenderer final: public Component
 public:
 	TextRenderer(const std::string& text, Font* fontPtr, GameObject* ownerPtr);
 
-	virtual void Render() const override;
+	virtual void Render() override;
 
 	void SetText(const std::string& text);
 private:
