@@ -40,11 +40,6 @@ TrashTheCache::TrashTheCache(GameObject* owner):
 
 void TrashTheCache::Render()
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
-
 	ImGui::Begin("Exercise 1");
 
 	ImGui::InputInt("Sample Size", &m_SampleSizeInt);
