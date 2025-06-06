@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include "InputManager.h"
-#include <backends/imgui_impl_sdl2.h>
+#include "Command.h"
+#include <Windows.h>
+#include <Xinput.h>
 
 bool InputManager::ProcessInput()
 {
@@ -15,10 +17,12 @@ bool InputManager::ProcessInput()
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			
 		}
-		
-		//process input for IMGUI
-		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
 
 	return true;
+}
+
+void InputManager::AddCommand(std::unique_ptr<Command> command)
+{
+	m_Commands.push_back(std::move(command));
 }
