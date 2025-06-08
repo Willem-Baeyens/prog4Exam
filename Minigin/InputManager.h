@@ -1,19 +1,24 @@
 #pragma once
 #include "Singleton.h"
-#include "Command.h"
-#include <vector>
-#include <memory>
-
+#include <array>
+#include "Gamepad.h"
 
 class InputManager final : public Singleton<InputManager>
 {
 public:
+	InputManager();
+
 	bool ProcessInput();
 
-	void AddCommand(std::unique_ptr<Command> command);
+	void AddKeyboardBinding(SDL_Scancode button,std::unique_ptr<Command> command, TriggerType trigger = TriggerType::released);
+	void AddGamepadBinding(int button, DWORD controllerID, std::unique_ptr<Command> command, TriggerType trigger = TriggerType::released);
 
 private:
-	//Move m_BubbleMove;
+	std::vector<InputBinding> m_InputBindingsPressedThisFrame{};
+	std::vector<InputBinding> m_InputBindingsReleasedThisFrame{};
+	std::vector<InputBinding> m_InputBindingsDown{};
 
-	std::vector<std::unique_ptr<Command>> m_Commands;
+	std::vector<bool> m_KeysDown{};
+
+	std::array<Gamepad, 2> m_GamePads;
 };

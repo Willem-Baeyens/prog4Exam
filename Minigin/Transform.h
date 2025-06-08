@@ -13,6 +13,6 @@ public:
 	void SetLocalPosition(float x, float y, float z);
 	void SetLocalPosition(const glm::vec3& position);
 private:
-	glm::vec3 m_LocalPosition;
-	glm::vec3 m_WorldPosition;
+	glm::vec3 m_LocalPosition{};
+	glm::vec3 m_WorldPosition{};
 };

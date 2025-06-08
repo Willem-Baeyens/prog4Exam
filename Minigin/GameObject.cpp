@@ -112,12 +112,16 @@ const glm::vec3& GameObject::GetWorldPosition()
 
 void GameObject::SetWorldPosition(float x, float y, float z)
 {
-	m_Transform.SetWorldPosition(x, y, z);
+	SetWorldPosition(glm::vec3{ x,y,z });
 }
 
 void GameObject::SetWorldPosition(const glm::vec3& position)
 {
 	m_Transform.SetWorldPosition(position);
+	if (!m_Parent)
+	{
+		m_Transform.SetLocalPosition(position);
+	}
 }
 
 const glm::vec3& GameObject::GetLocalPosition() const

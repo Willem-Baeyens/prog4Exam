@@ -21,13 +21,15 @@ private:
 	GameObject* m_GameObject;
 };
 
-class Move : GameObjectCommand
+class Move final : public GameObjectCommand
 {
 public:
-	virtual void Execute() override;
+	Move(GameObject* gameObject);
+	Move(GameObject* gameObject, glm::vec3 direction = glm::vec3{1,0,0}, float speed = 10);
 
+	virtual void Execute() override;
 private:
-	glm::vec3 m_Direction{ 1,0,0 };
-	float m_Speed{ 10 };
+	glm::vec3 m_Direction{ 0,0,0 };
+	float m_Speed{ 0 };
 };
 

@@ -69,38 +69,17 @@
     <ClInclude Include="Rotator.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\backends\imgui_impl_opengl3.h">
+    <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\backends\imgui_impl_sdl2.h">
+    <ClInclude Include="Movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\imconfig.h">
+    <ClInclude Include="Gamepad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\imgui.h">
+    <ClInclude Include="InputBinding.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\imgui_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\implot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\implot_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\imstb_rectpack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\imstb_textedit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.91.8\imstb_truetype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TrashTheCache.h">
-      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +116,6 @@
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -155,35 +131,20 @@
     <ClCompile Include="Rotator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\backends\imgui_impl_opengl3.cpp">
+    <ClCompile Include="Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\backends\imgui_impl_sdl2.cpp">
+    <ClCompile Include="Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\imgui.cpp">
+    <ClCompile Include="Movement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\imgui_demo.cpp">
+    <ClCompile Include="Gamepad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\imgui_draw.cpp">
+    <ClCompile Include="InputBinding.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\imgui_tables.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\implot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.91.8\implot_items.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TrashTheCache.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
