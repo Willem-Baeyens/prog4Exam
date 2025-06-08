@@ -183,6 +183,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Gamepad.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="InputBinding.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
