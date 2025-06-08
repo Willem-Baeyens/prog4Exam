@@ -12,7 +12,7 @@ Rotator::Rotator(float radius, float secondsPerRotation,GameObject* pivotObject,
 	m_SecondsPerRotation{secondsPerRotation}
 {
 	GetOwner()->SetParent(pivotObject,true);
-	glm::vec3 localpos{ 1,1,0};
+	glm::vec2 localpos{ 1,1};
 	glm::normalize(localpos);
 	localpos *= radius;
 	GetOwner()->SetLocalPosition(localpos);
@@ -26,8 +26,9 @@ void Rotator::Update()
 	const float cosine{ cos(angle) };
 	const float sine{ sin(angle) };
 
-	const glm::mat3x3 rotationMatrix{ cosine,sine,0,-sine,cosine,0,0,0,1};
-	glm::vec3 vector{ GetOwner()->GetLocalPosition()};
+	const glm::mat2x2 rotationMatrix{cosine, -sine,
+									 sine  , cosine};
+	glm::vec2 vector{ GetOwner()->GetLocalPosition()};
 	vector = rotationMatrix * vector;
 	GetOwner()->SetLocalPosition(vector);
 }

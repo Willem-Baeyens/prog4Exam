@@ -28,12 +28,12 @@ class Move final : public GameObjectCommand
 {
 public:
 	Move(GameObject* gameObject);
-	Move(GameObject* gameObject, glm::vec3 direction = glm::vec3{1,0,0}, float speed = 10);
+	Move(GameObject* gameObject, glm::vec2 direction = glm::vec2{1.f,0.f}, float speed = 10.f);
 
 	virtual void Execute() override;
 private:
-	glm::vec3 m_Direction{ 0,0,0 };
-	float m_Speed{ 0 };
+	glm::vec2 m_Direction{ 1.f,0.f };
+	float m_Speed{ 0.f };
 }; 
 #endif // !COMMAND_H
 

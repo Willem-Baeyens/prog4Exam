@@ -17,16 +17,16 @@ Move::Move(GameObject* gameObject):
 {
 }
 
-Move::Move(GameObject* gameObject, glm::vec3 direction, float speed):
+Move::Move(GameObject* gameObject, glm::vec2 direction, float speed):
 	GameObjectCommand{ gameObject },
-	m_Direction {direction}, 
+	m_Direction {glm::normalize(direction)}, 
 	m_Speed{ speed }
 {
 }
 
 void Move::Execute()
 {
-	glm::vec3 pos = GetGameObject()->GetLocalPosition();
+	glm::vec2 pos = GetGameObject()->GetLocalPosition();
 	pos +=  m_Direction * m_Speed * Time::GetDeltaTime();
 	GetGameObject()->SetLocalPosition(pos);
 }

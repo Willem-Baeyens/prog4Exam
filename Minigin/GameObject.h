@@ -65,13 +65,13 @@ public:
 	GameObject* GetChildAt(size_t index) const;
 
 
-	const glm::vec3& GetWorldPosition();
-	void SetWorldPosition(float x, float y, float z);
-	void SetWorldPosition(const glm::vec3& position);
+	const glm::vec2& GetWorldPosition();
+	void SetWorldPosition(float x, float y);
+	void SetWorldPosition(const glm::vec2& position);
 
-	const glm::vec3& GetLocalPosition() const;
-	void SetLocalPosition(float x, float y, float z);
-	void SetLocalPosition(const glm::vec3& position);
+	const glm::vec2& GetLocalPosition() const;
+	void SetLocalPosition(float x, float y);
+	void SetLocalPosition(const glm::vec2& position);
 
 private:
 	void DeleteComponents();

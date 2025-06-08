@@ -100,7 +100,7 @@ GameObject* GameObject::GetChildAt(size_t index) const
 	return m_Children[index];
 }
 
-const glm::vec3& GameObject::GetWorldPosition()
+const glm::vec2& GameObject::GetWorldPosition()
 {
 	if (m_WorldPositionDirty)
 	{
@@ -109,12 +109,12 @@ const glm::vec3& GameObject::GetWorldPosition()
 	return m_Transform.GetWorldPosition();
 }
 
-void GameObject::SetWorldPosition(float x, float y, float z)
+void GameObject::SetWorldPosition(float x, float y)
 {
-	SetWorldPosition(glm::vec3{ x,y,z });
+	SetWorldPosition(glm::vec2{ x,y });
 }
 
-void GameObject::SetWorldPosition(const glm::vec3& position)
+void GameObject::SetWorldPosition(const glm::vec2& position)
 {
 	m_Transform.SetWorldPosition(position);
 	if (!m_Parent)
@@ -123,18 +123,18 @@ void GameObject::SetWorldPosition(const glm::vec3& position)
 	}
 }
 
-const glm::vec3& GameObject::GetLocalPosition() const
+const glm::vec2& GameObject::GetLocalPosition() const
 {
 	return m_Transform.GetLocalPosition();
 }
 
-void GameObject::SetLocalPosition(float x, float y, float z)
+void GameObject::SetLocalPosition(float x, float y)
 {
-	m_Transform.SetLocalPosition(x, y, z);
+	m_Transform.SetLocalPosition(x, y);
 	SetWorldPositionDirty();
 }
 
-void GameObject::SetLocalPosition(const glm::vec3& position)
+void GameObject::SetLocalPosition(const glm::vec2& position)
 {
 	m_Transform.SetLocalPosition(position);
 	SetWorldPositionDirty();
