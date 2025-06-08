@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTRENDERER_H
+#define TEXTRENDERER_H
+
 #include <string>
 #include <memory>
 #include "Component.h"
@@ -21,3 +23,4 @@ private:
 	Font*						m_FontPtr;
 	std::unique_ptr<Texture2D>	m_TextTextureUptr;
 };
+#endif // !TEXTRENDERER_H

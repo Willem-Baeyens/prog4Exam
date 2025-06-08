@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TRANSFORM_H
+#define TRANSFORM_H
+
 #include <glm.hpp>
 
 
@@ -16,3 +18,4 @@ private:
 	glm::vec3 m_LocalPosition{};
 	glm::vec3 m_WorldPosition{};
 };
+#endif // !TRANSFORM_H

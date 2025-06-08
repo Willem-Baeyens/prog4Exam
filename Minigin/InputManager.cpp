@@ -77,7 +77,7 @@ void InputManager::AddKeyboardBinding(SDL_Scancode button, std::unique_ptr<Comma
 	}
 }
 
-void InputManager::AddGamepadBinding(int button, DWORD controllerID, std::unique_ptr<Command> command, TriggerType trigger)
+void InputManager::AddGamepadBinding(GamepadButton button, int controllerID, std::unique_ptr<Command> command, TriggerType trigger)
 {
 	m_GamePads[controllerID].AddBinding(button, std::move(command), trigger);
 }

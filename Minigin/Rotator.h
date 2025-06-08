@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ROTATOR_H
+#define ROTATOR_H
+
 #include "Component.h"
 class Rotator : public Component
 {
@@ -9,4 +11,5 @@ public:
 private:
 	float m_SecondsPerRotation;
 };
+#endif // !ROTATOR_H
 

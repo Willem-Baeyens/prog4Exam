@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INPUTBINDING_H
+#define INPUTBINDING_H
+
 #include <memory>
 #include "Command.h"
 struct InputBinding
@@ -15,4 +17,5 @@ enum class TriggerType
 	down,
 	released
 };
+#endif // !INPUTBINDING_H
 

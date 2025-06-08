@@ -1,12 +1,12 @@
-#pragma once
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
+
 #include <memory>
 #include <vector>
 #include <algorithm>
 #include <initializer_list>
 #include "Transform.h"
 #include "Component.h"	
-
-
 
 class GameObject final
 {
@@ -90,3 +90,4 @@ private:
 	bool m_DeletionFlag;
 	bool m_WorldPositionDirty;
 };
+#endif // !GAMEOBJECT_H

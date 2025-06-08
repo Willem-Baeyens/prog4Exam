@@ -1,4 +1,6 @@
-#pragma once
+#ifndef COMPONENT_H
+#define COMPONENT_H
+
 class GameObject;
 class Component
 {
@@ -26,3 +28,4 @@ private:
 	GameObject* m_OwnerPtr;
 	bool m_DeletionFlag{ false };
 };
+#endif // !COMPONENT_H

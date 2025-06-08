@@ -1,4 +1,6 @@
-#pragma once
+#ifndef RENDERER_H
+#define RENDERER_H
+
 #include <SDL.h>
 #include "Singleton.h"
 
@@ -25,4 +27,5 @@ public:
 	void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
 };
 //TODO make vector of rendercomponents(not pointers) 
+#endif // !RENDERER_H
 

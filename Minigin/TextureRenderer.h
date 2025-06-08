@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTURERENDERER_H
+#define TEXTURERENDERER_H
+
 #include <string>
 #include <memory>
 #include "Component.h"
@@ -14,3 +16,4 @@ public:
 private:
 	Texture2D*	m_TexturePtr;
 };
+#endif // !TEXTURERENDERER_H

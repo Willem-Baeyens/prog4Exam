@@ -1,4 +1,7 @@
-#pragma once
+#ifndef COMMAND_H
+#define COMMAND_H
+
+
 #include <iostream>
 #include <glm.hpp>
 
@@ -31,5 +34,6 @@ public:
 private:
 	glm::vec3 m_Direction{ 0,0,0 };
 	float m_Speed{ 0 };
-};
+}; 
+#endif // !COMMAND_H
 

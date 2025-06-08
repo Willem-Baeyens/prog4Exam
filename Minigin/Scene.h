@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCENE_H
+#define SCENE_H
+
 #include "SceneManager.h"
 
 
@@ -32,5 +34,6 @@ private:
 
 	static unsigned int m_IdCounter; 
 };
+#endif // !SCENE_H
 
 

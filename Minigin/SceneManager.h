@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCENEMANAGER_H
+#define SCENEMANAGER_H
+
 #include <vector>
 #include <string>
 #include <memory>
@@ -20,3 +22,4 @@ private:
 	SceneManager() = default;
 	std::vector<std::shared_ptr<Scene>> m_scenes;
 };
+#endif // !SCENEMANAGER_H

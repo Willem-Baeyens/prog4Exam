@@ -1,11 +1,76 @@
 #include "Gamepad.h"
+#include "InputBinding.h"
+#include <vector>
 #include <algorithm>
-Gamepad::Gamepad(DWORD controllerIndex):
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <Xinput.h>
+
+#pragma comment(lib, "xinput.lib")
+
+class Gamepad::Impl
+{
+public:
+	Impl(int controllerIndex);
+	void ProcessInput();
+
+	bool WasPressedThisFrame(int button) const;
+	bool WasReleasedThisFrame(int button) const;
+	bool IsDown(int button) const;
+
+	void AddBinding(GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger = TriggerType::released);
+private:
+	int m_ControllerIndex;
+
+	XINPUT_STATE m_PreviousState{};
+	XINPUT_STATE m_CurrentState{};
+
+	DWORD m_ButtonsPressedThisFrame{};
+	DWORD m_ButtonsReleasedThisFrame{};
+
+	std::vector<InputBinding> m_InputBindingsPressedThisFrame{};
+	std::vector<InputBinding> m_InputBindingsReleasedThisFrame{};
+	std::vector<InputBinding> m_InputBindingsDown{};
+};
+
+Gamepad::Gamepad(int controllerIndex):
+	m_Impl{std::make_unique<Impl>(controllerIndex)}
+{
+}
+
+Gamepad::~Gamepad() = default;
+
+void Gamepad::ProcessInput()
+{
+	m_Impl->ProcessInput();
+}
+
+bool Gamepad::WasPressedThisFrame(int button) const
+{
+	return m_Impl->WasPressedThisFrame(button);
+}
+
+bool Gamepad::WasReleasedThisFrame(int button) const
+{
+	return m_Impl->WasReleasedThisFrame(button);
+}
+
+bool Gamepad::IsDown(int button) const
+{
+	return m_Impl->IsDown(button);
+}
+
+void Gamepad::AddBinding(GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger)
+{
+	m_Impl->AddBinding(button, std::move(command), trigger);
+}
+
+Gamepad::Impl::Impl(int controllerIndex):
 	m_ControllerIndex{controllerIndex}
 {
 }
 
-void Gamepad::ProcessInput()
+void Gamepad::Impl::ProcessInput()
 {
 	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
@@ -33,36 +98,32 @@ void Gamepad::ProcessInput()
 		{
 			binding.command->Execute();
 		}});
-
 }
 
-bool Gamepad::WasPressedThisFrame(unsigned int button) const
+bool Gamepad::Impl::WasPressedThisFrame(int button) const
 {
 	return button & m_ButtonsPressedThisFrame;
 }
 
-bool Gamepad::WasReleasedThisFrame(unsigned int button) const
+bool Gamepad::Impl::WasReleasedThisFrame(int button) const
 {
 	return button & m_ButtonsReleasedThisFrame;
 }
 
-bool Gamepad::IsDown(unsigned int button) const
+bool Gamepad::Impl::IsDown(int button) const
 {
 	return button & m_CurrentState.Gamepad.wButtons;
 }
 
-void Gamepad::AddBinding(int button, std::unique_ptr<Command> command, TriggerType trigger)
+void Gamepad::Impl::AddBinding(GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger)
 {
 	switch (trigger)
 	{
 	case TriggerType::pressed:
-		m_InputBindingsPressedThisFrame.push_back(InputBinding{ button,std::move(command) });
-		break;
+		m_InputBindingsPressedThisFrame.push_back(InputBinding{ static_cast<int>(button),std::move(command) });break;
 	case TriggerType::down:
-		m_InputBindingsDown.push_back(InputBinding{ button,std::move(command) });
-		break;
+		m_InputBindingsDown.push_back(InputBinding{ static_cast<int>(button),std::move(command) });break;
 	case TriggerType::released:
-		m_InputBindingsReleasedThisFrame.push_back(InputBinding{ button,std::move(command) });
-		break;
+		m_InputBindingsReleasedThisFrame.push_back(InputBinding{ static_cast<int>(button),std::move(command) });break;
 	}
 }
