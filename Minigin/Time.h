@@ -1,17 +1,11 @@
 #ifndef TIME_H
 #define TIME_H
 
-#include "Singleton.h"
-
-class Time final : public Singleton<Time>
+namespace Time
 {
-public:
-	float GetDeltaTime() const;
-	float GetFixedDeltaTime() const;
+	float GetDeltaTime();
+	float GetFixedDeltaTime();
 
-	void SetDeltaTime(float deltaTime);
-private:
-	float m_DeltaTime;
-	const float m_FixedDeltaTime{ 1 / 60.f };
-};
+	void  SetDeltaTime(float deltaTime);
+}
 #endif // !TIME_H

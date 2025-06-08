@@ -15,7 +15,7 @@
 #include "Font.h"
 #include "Texture2D.h"
 
-SDL_Window* g_window{};
+SDL_Window* g_Window{};
 
 void PrintSDLVersion()
 {
@@ -55,7 +55,7 @@ m_MsPerFrame{7}
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	g_window = SDL_CreateWindow(
+	g_Window = SDL_CreateWindow(
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
@@ -63,32 +63,27 @@ m_MsPerFrame{7}
 		480,
 		SDL_WINDOW_OPENGL
 	);
-	if (g_window == nullptr) 
+	if (g_Window == nullptr) 
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Init(g_window);
+	Renderer::Initialize(g_Window);
 
-	ResourceManager::GetInstance().Init(dataPath);
+	ResourceManager::Initiliaze(dataPath);
 }
 
 Minigin::~Minigin()
 {
-	Renderer::GetInstance().Destroy();
-	SDL_DestroyWindow(g_window);
-	g_window = nullptr;
+	Renderer::Destroy();
+	SDL_DestroyWindow(g_Window);
+	g_Window = nullptr;
 	SDL_Quit();
 }
 
 void Minigin::Run(const std::function<void()>& load)
 {
 	load();
-
-	auto& renderer = Renderer::GetInstance();
-	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
-	auto& time = Time::GetInstance();
 
 	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
@@ -98,20 +93,20 @@ void Minigin::Run(const std::function<void()>& load)
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
 		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
-		time.SetDeltaTime(deltaTime);
+		Time::SetDeltaTime(deltaTime);
 		lastTime = currentTime;
 		lag += deltaTime;
 
-		doContinue = input.ProcessInput();
-		while (lag >= time.GetFixedDeltaTime())
+		doContinue = InputManager::ProcessInput();
+		while (lag >= Time::GetFixedDeltaTime())
 		{
-			sceneManager.FixedUpdate();
-			lag -= time.GetFixedDeltaTime();
+			SceneManager::FixedUpdate();
+			lag -= Time::GetFixedDeltaTime();
 		}
 
-		sceneManager.Update();
-		sceneManager.LateUpdate();
-		renderer.Render();
+		SceneManager::Update();
+		SceneManager::LateUpdate();
+		Renderer::Render();
 		const auto sleep_time = currentTime + m_MsPerFrame - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleep_time);
 	}

@@ -17,7 +17,7 @@ void Fps::Update()
 {
 	assert(m_TextRendererPtr);
 
-	m_DeltaTimes[m_DeltaTimeIndex] = Time::GetInstance().GetDeltaTime();
+	m_DeltaTimes[m_DeltaTimeIndex] = Time::GetDeltaTime();
 
 	if (++m_DeltaTimeIndex == m_DeltaTimes.size() - 1)
 	{

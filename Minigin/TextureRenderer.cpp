@@ -14,6 +14,6 @@ void TextureRenderer::Render()
 	if (m_TexturePtr != nullptr)
 	{
 		const auto& pos = GetOwner()->GetWorldPosition();
-		Renderer::GetInstance().RenderTexture(*m_TexturePtr, pos.x, pos.y);
+		Renderer::RenderTexture(*m_TexturePtr, pos.x, pos.y);
 	}
 }

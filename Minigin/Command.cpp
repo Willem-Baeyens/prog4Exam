@@ -27,6 +27,6 @@ Move::Move(GameObject* gameObject, glm::vec3 direction, float speed):
 void Move::Execute()
 {
 	glm::vec3 pos = GetGameObject()->GetLocalPosition();
-	pos +=  m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
+	pos +=  m_Direction * m_Speed * Time::GetDeltaTime();
 	GetGameObject()->SetLocalPosition(pos);
 }

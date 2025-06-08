@@ -25,8 +25,14 @@ enum class GamepadButton
 class Gamepad
 {
 public:
+	Gamepad();
 	Gamepad(int controllerIndex);
 	~Gamepad();
+
+	Gamepad(const Gamepad& other) = delete;
+	Gamepad(Gamepad&& other) = delete;
+	Gamepad& operator=(const Gamepad& other) = delete;
+	Gamepad& operator=(Gamepad&& other) noexcept;
 
 	void ProcessInput();
 

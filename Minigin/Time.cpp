@@ -1,16 +1,24 @@
 #include "Time.h"
 
-float Time::GetDeltaTime() const
+namespace Time
 {
-	return m_DeltaTime;
-}
+	static float DeltaTime;
+	static const float FixedDeltaTime{ 1 / 60.f };
 
-float Time::GetFixedDeltaTime() const
-{
-	return m_FixedDeltaTime;
-}
 
-void Time::SetDeltaTime(float deltaTime)
-{
-	m_DeltaTime = deltaTime;
+	float GetDeltaTime()
+	{
+		return DeltaTime;
+	}
+
+	float GetFixedDeltaTime()
+	{
+		return FixedDeltaTime;
+	}
+
+	void SetDeltaTime(float deltaTime)
+	{
+		DeltaTime = deltaTime;
+	}
+
 }

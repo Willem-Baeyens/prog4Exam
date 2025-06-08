@@ -33,12 +33,20 @@ private:
 	std::vector<InputBinding> m_InputBindingsDown{};
 };
 
+Gamepad::Gamepad() = default;
+
 Gamepad::Gamepad(int controllerIndex):
 	m_Impl{std::make_unique<Impl>(controllerIndex)}
 {
 }
 
 Gamepad::~Gamepad() = default;
+
+Gamepad& Gamepad::operator=(Gamepad&& other) noexcept
+{
+	m_Impl = std::move(other.m_Impl);
+	return *this;
+}
 
 void Gamepad::ProcessInput()
 {

@@ -1,31 +1,25 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <SDL.h>
-#include "Singleton.h"
-
 class Texture2D;
-/**
- * Simple RAII wrapper for the SDL renderer
- */
-class Renderer final : public Singleton<Renderer>
+struct SDL_Window;
+struct SDL_Renderer;
+struct SDL_Color;
+
+namespace Renderer
 {
-	SDL_Renderer* m_renderer{};
-	SDL_Window* m_window{};
-	SDL_Color m_clearColor{};	
-public:
-	void Init(SDL_Window* window);
-	void Render() const;
+	void Initialize(SDL_Window* window);
+	void Render();
 	void Destroy();
 
-	void RenderTexture(const Texture2D& texture, float x, float y) const;
-	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+	void RenderTexture(const Texture2D& texture, float x, float y);
+	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) ;
 
-	SDL_Renderer* GetSDLRenderer() const;
+	SDL_Renderer* GetSDLRenderer();
 
-	const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
-	void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
-};
+	const SDL_Color& GetBackgroundColor();
+	void SetBackgroundColor(const SDL_Color& color);
+}
 //TODO make vector of rendercomponents(not pointers) 
 #endif // !RENDERER_H
 

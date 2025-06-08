@@ -21,7 +21,7 @@ Rotator::Rotator(float radius, float secondsPerRotation,GameObject* pivotObject,
 void Rotator::Update()
 {
 	constexpr float twoPi{ static_cast<float>(M_PI) * 2.f };
-	const float angle{ twoPi * m_SecondsPerRotation * Time::GetInstance().GetDeltaTime() };
+	const float angle{ twoPi * m_SecondsPerRotation * Time::GetDeltaTime() };
 
 	const float cosine{ cos(angle) };
 	const float sine{ sin(angle) };

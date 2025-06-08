@@ -1,87 +1,93 @@
 #include <SDL.h>
 #include "InputManager.h"
 #include <algorithm>
+#include <vector>
+#include <array>
 
-InputManager::InputManager():
-	m_GamePads{{Gamepad(0),Gamepad(1)}}
+namespace InputManager
 {
-	m_KeysDown.resize(SDL_NUM_SCANCODES, false);
-}
+	static	std::vector<InputBinding> InputBindingsPressedThisFrame{};
+	static	std::vector<InputBinding> InputBindingsReleasedThisFrame{};
+	static	std::vector<InputBinding> InputBindingsDown{};
 
-bool InputManager::ProcessInput()
-{
-	SDL_Event e;
+	static std::vector<bool> KeysDown{};
 
-	auto bindsButton = [&e](const InputBinding& binding) {return binding.button == e.key.keysym.scancode; };
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
-			return false;
-		}
-		if (e.type == SDL_KEYDOWN) {
+	static std::array<Gamepad, 2> GamePads{};
 
-			if (!m_KeysDown[e.key.keysym.scancode])
+	void Initialize()
+	{
+		GamePads = { Gamepad(0),Gamepad(1) };
+		KeysDown.resize(SDL_NUM_SCANCODES, false);
+	}
+
+	bool ProcessInput()
+	{
+		SDL_Event e;
+		
+		auto bindsButton = [&e](const InputBinding& binding) {return binding.button == e.key.keysym.scancode; };
+		while (SDL_PollEvent(&e)) {
+			if (e.type == SDL_QUIT) {
+				return false;
+			}
+			if (e.type == SDL_KEYDOWN) {
+
+				if (!KeysDown[e.key.keysym.scancode])
+				{
+					auto binding = std::find_if(InputBindingsPressedThisFrame.cbegin(), InputBindingsPressedThisFrame.cend(), bindsButton);
+					if (binding != InputBindingsPressedThisFrame.cend())
+					{
+						binding->command->Execute();
+					}
+		
+					KeysDown[e.key.keysym.scancode] = true;
+				}
+			}
+		
+			if (e.type == SDL_KEYUP)
 			{
-				auto binding = std::find_if(m_InputBindingsPressedThisFrame.cbegin(), m_InputBindingsPressedThisFrame.cend(), bindsButton);
-				if (binding != m_InputBindingsPressedThisFrame.cend())
+				auto binding = std::find_if(InputBindingsReleasedThisFrame.cbegin(), InputBindingsReleasedThisFrame.cend(), bindsButton);
+				if (binding != InputBindingsReleasedThisFrame.cend())
 				{
 					binding->command->Execute();
 				}
-
-				m_KeysDown[e.key.keysym.scancode] = true;
+		
+				KeysDown[e.key.keysym.scancode] = false;
 			}
-
-
 		}
-
-		if (e.type == SDL_KEYUP)
+		
+		for (int bindingIndex{}; bindingIndex < InputBindingsDown.size(); ++bindingIndex)
 		{
-			auto binding = std::find_if(m_InputBindingsReleasedThisFrame.cbegin(), m_InputBindingsReleasedThisFrame.cend(), bindsButton);
-			if (binding != m_InputBindingsReleasedThisFrame.cend())
+			if (KeysDown[InputBindingsDown[bindingIndex].button])
 			{
-				binding->command->Execute();
+				InputBindingsDown[bindingIndex].command->Execute();
 			}
-
-			m_KeysDown[e.key.keysym.scancode] = false;
 		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-		}
+		
+		std::for_each(GamePads.begin(), GamePads.end(), [](Gamepad& gamepad) {gamepad.ProcessInput(); });
+		
+		return true;
 	}
-
-	for (int bindingIndex{}; bindingIndex < m_InputBindingsDown.size(); ++bindingIndex)
+	void AddKeyboardBinding(SDL_Scancode button, std::unique_ptr<Command> command, TriggerType trigger)
 	{
-		if (m_KeysDown[m_InputBindingsDown[bindingIndex].button])
+		switch (trigger)
 		{
-			m_InputBindingsDown[bindingIndex].command->Execute();
+		case TriggerType::pressed:
+			InputBindingsPressedThisFrame.push_back(InputBinding{ button,std::move(command) });
+			break;
+		case TriggerType::down:
+			InputBindingsDown.push_back(InputBinding{ button,std::move(command) });
+			break;
+		case TriggerType::released:
+			InputBindingsReleasedThisFrame.push_back(InputBinding{ button,std::move(command) });
+			break;
 		}
 	}
 
-	std::for_each(m_GamePads.begin(), m_GamePads.end(), [](Gamepad& gamepad) {gamepad.ProcessInput(); });
-
-
-	return true;
-}
-
-void InputManager::AddKeyboardBinding(SDL_Scancode button, std::unique_ptr<Command> command, TriggerType trigger)
-{
-	switch (trigger)
+	void AddGamepadBinding(int controllerID, GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger)
 	{
-	case TriggerType::pressed:
-		m_InputBindingsPressedThisFrame.push_back(InputBinding{button,std::move(command)});
-		break;
-	case TriggerType::down:
-		m_InputBindingsDown.push_back(InputBinding{ button,std::move(command) });
-		break;
-	case TriggerType::released:
-		m_InputBindingsReleasedThisFrame.push_back(InputBinding{ button,std::move(command) });
-		break;
+		GamePads[controllerID].AddBinding(button, std::move(command), trigger);
 	}
 }
-
-void InputManager::AddGamepadBinding(GamepadButton button, int controllerID, std::unique_ptr<Command> command, TriggerType trigger)
-{
-	m_GamePads[controllerID].AddBinding(button, std::move(command), trigger);
-}
-
 
 
 

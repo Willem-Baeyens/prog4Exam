@@ -15,6 +15,11 @@ void Scene::DeleteObjects()
 
 Scene::~Scene() = default;
 
+Scene::Scene(Scene&& other) noexcept :
+	m_Name{std::move(other.m_Name)},m_Objects{std::move(other.m_Objects)} 
+{
+}
+
 void Scene::Add(std::unique_ptr<GameObject> object)
 {
 	m_Objects.emplace_back(std::move(object));

@@ -19,7 +19,7 @@ void TextRenderer::Render()
 	if (m_TextTextureUptr != nullptr)
 	{
 		const auto& pos = GetOwner()->GetWorldPosition();
-		Renderer::GetInstance().RenderTexture(*m_TextTextureUptr, pos.x, pos.y);
+		Renderer::RenderTexture(*m_TextTextureUptr, pos.x, pos.y);
 	}
 }
 
@@ -39,7 +39,7 @@ void TextRenderer::UpdateTexture()
 	{
 		throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 	}
-	auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surface);
+	auto texture = SDL_CreateTextureFromSurface(Renderer::GetSDLRenderer(), surface);
 	if (texture == nullptr)
 	{
 		throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());

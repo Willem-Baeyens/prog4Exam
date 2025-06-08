@@ -1,41 +1,45 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-void SceneManager::Update()
+namespace SceneManager
 {
-	for(auto& scene : m_scenes)
-	{
-		scene->Update();
-	}
-}
+	std::vector<std::unique_ptr<Scene>> Scenes;
 
-void SceneManager::LateUpdate()
-{
-	for (auto& scene : m_scenes)
+	Scene& CreateScene(const std::string& name)
 	{
-		scene->LateUpdate();
+		Scenes.emplace_back(std::make_unique<Scene>(Scene(name)));
+		return *Scenes.back();
 	}
-}
 
-void SceneManager::FixedUpdate()
-{
-	for (auto& scene : m_scenes)
+	void Update()
 	{
-		scene->FixedUpdate();
+		for(auto& scene : Scenes)
+		{
+			scene->Update();
+		}
 	}
-}
 
-void SceneManager::Render()
-{
-	for (const auto& scene : m_scenes)
+	void LateUpdate()
 	{
-		scene->Render();
+		for (auto& scene : Scenes)
+		{
+			scene->LateUpdate();
+		}
 	}
-}
 
-Scene& SceneManager::CreateScene(const std::string& name)
-{
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
-	return *scene;
+	void FixedUpdate()
+	{
+		for (auto& scene : Scenes)
+		{
+			scene->FixedUpdate();
+		}
+	}
+
+	void Render()
+	{
+		for (auto& scene : Scenes)
+		{
+			scene->Render();
+		}
+	}
 }
