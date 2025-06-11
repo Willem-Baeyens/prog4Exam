@@ -3,7 +3,7 @@
 
 #include <array>
 #include "TextRenderer.h"
-#include "Time.h"
+#include "EngineTime.h"
 
 class Fps final : public Component
 {

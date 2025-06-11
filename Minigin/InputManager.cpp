@@ -55,15 +55,21 @@ namespace InputManager
 			}
 		}
 		
-		for (int bindingIndex{}; bindingIndex < InputBindingsDown.size(); ++bindingIndex)
-		{
-			if (KeysDown[InputBindingsDown[bindingIndex].button])
+
+		std::for_each(InputBindingsDown.cbegin(), InputBindingsDown.cend(),
+			[](const InputBinding& inputBinding)
 			{
-				InputBindingsDown[bindingIndex].command->Execute();
-			}
-		}
+				if (inputBinding.button)
+				{
+					inputBinding.command->Execute();
+				}
+			});
 		
-		std::for_each(GamePads.begin(), GamePads.end(), [](Gamepad& gamepad) {gamepad.ProcessInput(); });
+		std::for_each(GamePads.begin(), GamePads.end(), 
+			[](Gamepad& gamepad) 
+			{
+				gamepad.ProcessInput(); 
+			});
 		
 		return true;
 	}

@@ -1,6 +1,6 @@
 #include "Command.h"
 #include "GameObject.h"
-#include "Time.h"
+#include "EngineTime.h"
 
 GameObjectCommand::GameObjectCommand(GameObject* gameObject):
 	m_GameObject{gameObject}

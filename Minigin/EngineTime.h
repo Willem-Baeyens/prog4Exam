@@ -1,5 +1,5 @@
-#ifndef TIME_H
-#define TIME_H
+#ifndef ENGINE_TIME_H
+#define ENGINE_TIME_H
 
 namespace Time
 {
@@ -8,4 +8,4 @@ namespace Time
 
 	void  SetDeltaTime(float deltaTime);
 }
-#endif // !TIME_H
+#endif // !ENGINE_TIME_H

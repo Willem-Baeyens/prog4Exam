@@ -1,4 +1,3 @@
-#pragma once
 #include <stdexcept>
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
@@ -11,7 +10,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "Time.h"
+#include "EngineTime.h"
 #include "Font.h"
 #include "Texture2D.h"
 
@@ -74,7 +73,7 @@ Minigin::Minigin(const std::string &dataPath)
 	ResourceManager::Initiliaze(dataPath);
 }
 
-Minigin::~Minigin()
+Minigin::~Minigin() noexcept
 {
 	Renderer::Destroy();
 	SDL_DestroyWindow(g_Window);
@@ -115,3 +114,10 @@ void Minigin::Run(const std::function<void()>& load)
 	}
 
 }
+
+
+//TODO
+//Rule of 5
+//noexcept and nodiscard
+//data locality looping over components
+//mark classes final

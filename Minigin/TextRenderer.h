@@ -4,10 +4,10 @@
 #include <string>
 #include <memory>
 #include "Component.h"
+#include "Texture2D.h"
 
 class GameObject;
 class Font;
-class Texture2D;
 class TextRenderer final: public Component
 {
 public:

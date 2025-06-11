@@ -1,12 +1,14 @@
-#include <SDL.h>
-
 #if _DEBUG
 #if __has_include(<vld.h>)
 #include <vld.h>
 #endif
 #endif
 
+#include <SDL.h>
+
+
 #include "Minigin.h"
+
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "Scene.h"

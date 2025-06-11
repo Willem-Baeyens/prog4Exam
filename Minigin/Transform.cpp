@@ -10,7 +10,6 @@ void Transform::SetWorldPosition(const float x, const float y)
 void Transform::SetWorldPosition(const glm::vec2& position)
 {
 	m_WorldPosition = position;
-	glm::length(m_WorldPosition);
 }
 
 void Transform::SetLocalPosition(float x, float y)

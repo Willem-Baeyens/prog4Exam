@@ -4,7 +4,7 @@
 
 #include "Rotator.h"
 #include "GameObject.h"
-#include "Time.h"
+#include "EngineTime.h"
 
 
 Rotator::Rotator(float radius, float secondsPerRotation,GameObject* pivotObject,GameObject* owner):
@@ -12,8 +12,7 @@ Rotator::Rotator(float radius, float secondsPerRotation,GameObject* pivotObject,
 	m_SecondsPerRotation{secondsPerRotation}
 {
 	GetOwner()->SetParent(pivotObject,true);
-	glm::vec2 localpos{ 1,1};
-	glm::normalize(localpos);
+	glm::vec2 localpos{ sqrt(0.5),sqrt(0.5)};
 	localpos *= radius;
 	GetOwner()->SetLocalPosition(localpos);
 }

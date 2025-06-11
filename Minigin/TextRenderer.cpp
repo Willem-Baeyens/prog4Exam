@@ -1,6 +1,5 @@
 #include "TextRenderer.h"
 #include "GameObject.h"
-#include "Texture2D.h"
 #include "Renderer.h"
 #include "Font.h"
 #include <SDL_ttf.h>
