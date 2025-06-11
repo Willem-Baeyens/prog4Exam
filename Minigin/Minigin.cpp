@@ -45,8 +45,7 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-Minigin::Minigin(const std::string &dataPath):
-m_MsPerFrame{7}
+Minigin::Minigin(const std::string &dataPath)
 {
 	PrintSDLVersion();
 	
@@ -56,7 +55,7 @@ m_MsPerFrame{7}
 	}
 
 	g_Window = SDL_CreateWindow(
-		"Programming 4 assignment",
+		"Programming 4 assignment - 2DAE10 Willem Baeyens",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		640,
@@ -69,6 +68,8 @@ m_MsPerFrame{7}
 	}
 
 	Renderer::Initialize(g_Window);
+
+	InputManager::Initialize();
 
 	ResourceManager::Initiliaze(dataPath);
 }
@@ -89,6 +90,8 @@ void Minigin::Run(const std::function<void()>& load)
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.0f;
 
+	std::chrono::duration<double, std::milli> MaxTimePerFrame{ static_cast<double>(std::milli().den) / static_cast<double>(m_MaxFps) };
+
 	while (doContinue)
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
@@ -107,7 +110,7 @@ void Minigin::Run(const std::function<void()>& load)
 		SceneManager::Update();
 		SceneManager::LateUpdate();
 		Renderer::Render();
-		const auto sleep_time = currentTime + m_MsPerFrame - std::chrono::high_resolution_clock::now();
+		const auto sleep_time = MaxTimePerFrame + currentTime - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleep_time);
 	}
 

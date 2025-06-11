@@ -1,9 +1,9 @@
 #ifndef MINIGIN_H
 #define MINIGIN_H
 
+
 #include <string>
 #include <functional>
-#include <chrono>
 
 class Minigin
 {
@@ -18,6 +18,6 @@ public:
 	Minigin& operator=(Minigin&& other) = delete;
 
 private:
-	const std::chrono::milliseconds m_MsPerFrame;
+	const float m_MaxFps{ 120.f };
 };
 #endif // !MINIGIN_H

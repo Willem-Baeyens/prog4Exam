@@ -27,7 +27,7 @@ template<class... ArgsTypes>
 class MulticastEvent
 {
 public:
-	void BindFunction(std::function<void(ArgsTypes...)> function)
+	void BindFunction(const std::function<void(ArgsTypes...)>& function)
 	{
 		m_Functions.push_back(function);
 	}
