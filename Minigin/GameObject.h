@@ -6,13 +6,13 @@
 #include <algorithm>
 #include <initializer_list>
 #include "Transform.h"
-#include "Component.h"	
+#include "Component.h"
 
 class GameObject final
 {
 public:
-	GameObject();
-	~GameObject();
+	GameObject() = default;
+	~GameObject() = default;
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
 	GameObject& operator=(const GameObject& other) = delete;
@@ -83,11 +83,11 @@ private:
 	void SetWorldPositionDirty();
 	void UpdateWorldPosition();
 
-	Transform m_Transform;
+	Transform m_Transform{};
 	std::vector<std::unique_ptr<Component>> m_Components;
-	std::vector<GameObject*> m_Children;
-	GameObject* m_Parent;
-	bool m_DeletionFlag;
-	bool m_WorldPositionDirty;
+	std::vector<GameObject*> m_Children{};
+	GameObject* m_Parent{};
+	bool m_DeletionFlag{false};
+	bool m_WorldPositionDirty{false};
 };
 #endif // !GAMEOBJECT_H

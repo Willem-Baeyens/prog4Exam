@@ -27,5 +27,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Minigin\Rotator.cpp">
+      <Filter>Components\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Minigin\Rotator.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,14 +4,6 @@
 #include "Renderer.h"
 
 
-GameObject::GameObject():
-	m_Transform{}, m_Components{}, m_Children{}, 
-	m_Parent{ nullptr }, m_DeletionFlag{ false }, m_WorldPositionDirty{false}
-{
-}
-
-GameObject::~GameObject() = default;
-
 void GameObject::Update()
 {
 	for (auto& component : m_Components)

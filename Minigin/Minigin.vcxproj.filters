@@ -75,8 +75,8 @@
     <ClInclude Include="Event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rotator.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="SDBM_Hash.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -134,8 +134,8 @@
     <ClCompile Include="InputBinding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rotator.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="SDBM_Hash.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

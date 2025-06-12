@@ -44,7 +44,7 @@ namespace Renderer
 		SDL_RenderClear(Renderer);
 		
 		SceneManager::Render();
-		
+
 		SDL_RenderPresent(Renderer);
 	}
 
@@ -63,7 +63,7 @@ namespace Renderer
 		dst.x = static_cast<int>(x);
 		dst.y = static_cast<int>(y);
 		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+		SDL_RenderCopy(Renderer, texture.GetSDLTexture(), nullptr, &dst);
 	}
 
 	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height)

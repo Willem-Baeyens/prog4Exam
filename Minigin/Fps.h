@@ -8,7 +8,7 @@
 class Fps final : public Component
 {
 public:
-	Fps(GameObject* ownerPtr);
+	explicit Fps(GameObject* ownerPtr);
 
 	virtual void Update() override;
 private:

@@ -16,7 +16,7 @@ public:
 class GameObjectCommand : public Command
 {
 public:
-	GameObjectCommand(GameObject* gameObject);
+	explicit GameObjectCommand(GameObject* gameObject);
 	virtual ~GameObjectCommand() = default;
 protected:
 	GameObject* GetGameObject() const;
@@ -27,7 +27,7 @@ private:
 class Move final : public GameObjectCommand
 {
 public:
-	Move(GameObject* gameObject);
+	explicit Move(GameObject* gameObject);
 	Move(GameObject* gameObject, glm::vec2 direction = glm::vec2{1.f,0.f}, float speed = 10.f);
 
 	virtual void Execute() override;

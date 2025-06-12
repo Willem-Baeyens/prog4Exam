@@ -14,3 +14,5 @@ namespace InputManager
 	void AddGamepadBinding(int controllerID, GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger = TriggerType::released);
 }
 #endif // !INPUTMANAGER_H
+//TODO 
+//change to easily swap between input contexts e.g. gameplay input vs UI input

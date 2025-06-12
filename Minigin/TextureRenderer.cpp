@@ -11,9 +11,7 @@ TextureRenderer::TextureRenderer(Texture2D* texturePtr,GameObject* ownerPtr) :
 
 void TextureRenderer::Render()
 {
-	if (m_TexturePtr != nullptr)
-	{
-		const auto& pos = GetOwner()->GetWorldPosition();
-		Renderer::RenderTexture(*m_TexturePtr, pos.x, pos.y);
-	}
+	const auto& pos = GetOwner()->GetWorldPosition();
+	Renderer::RenderTexture(*m_TexturePtr, pos.x, pos.y);	
 }
+

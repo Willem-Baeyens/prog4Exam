@@ -1,9 +1,9 @@
 #ifndef EVENT_H
 #define EVENT_H
 #include <vector>
+#include <functional>
 #include <algorithm>
 
-//TODO consider cleanup after bound object gets deleted
 template<class... ArgsTypes>
 class Event
 {
@@ -19,7 +19,7 @@ public:
 	}
 
 private:
-	std::function<void(ArgTypes...)> m_Function{};
+	std::function<void(ArgsTypes...)> m_Function{};
 };
 
 
@@ -41,4 +41,5 @@ private:
 };
 #endif // !EVENT_H
 
+//TODO consider cleanup after bound object gets deleted
 

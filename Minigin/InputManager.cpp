@@ -59,7 +59,7 @@ namespace InputManager
 		std::for_each(InputBindingsDown.cbegin(), InputBindingsDown.cend(),
 			[](const InputBinding& inputBinding)
 			{
-				if (inputBinding.button)
+				if (KeysDown[inputBinding.button])
 				{
 					inputBinding.command->Execute();
 				}

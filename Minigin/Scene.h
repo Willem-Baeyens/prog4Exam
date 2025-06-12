@@ -1,37 +1,38 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "SceneManager.h"
+#include <string>
+#include <vector>
+#include <memory>
+#include "GameObject.h"
 
-
-class GameObject;
 class Scene final
 {
 public:
-	explicit Scene(const std::string& name);
+	explicit Scene(std::uint64_t id);
 	void Add(std::unique_ptr<GameObject> object);
 	void Remove(std::unique_ptr<GameObject> object);
 	void RemoveAll();
+
+	std::uint64_t GetId() const { return m_Id; };
 
 	void Update();
 	void LateUpdate();
 	void FixedUpdate();
 	void Render() const;
 
-	~Scene();
+	~Scene() noexcept;
 	Scene(const Scene& other) = delete;
 	Scene(Scene&& other) noexcept;
 	Scene& operator=(const Scene& other) = delete;
 	Scene& operator=(Scene&& other) = delete;
 
 private: 
-
 	void DeleteObjects();
 
-	std::string m_Name;
 	std::vector<std::unique_ptr<GameObject>> m_Objects{};
 
-	static unsigned int m_IdCounter; 
+	const std::uint64_t m_Id;
 };
 #endif // !SCENE_H
 

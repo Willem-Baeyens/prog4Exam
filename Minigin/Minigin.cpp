@@ -112,7 +112,6 @@ void Minigin::Run(const std::function<void()>& load)
 		const auto sleep_time = MaxTimePerFrame + currentTime - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleep_time);
 	}
-
 }
 
 
@@ -121,3 +120,5 @@ void Minigin::Run(const std::function<void()>& load)
 //noexcept and nodiscard
 //data locality looping over components
 //mark classes final
+//pimpl SDL
+//remove outdated includes

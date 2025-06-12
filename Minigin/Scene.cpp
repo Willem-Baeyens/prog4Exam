@@ -1,22 +1,20 @@
 #include "Scene.h"
 #include "GameObject.h"
-
 #include <algorithm>
 
 
-unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) : m_Name(name) {}
+Scene::Scene(std::uint64_t id) :m_Id{ id } {}
 
 void Scene::DeleteObjects()
 {
 	std::erase_if(m_Objects, [](const std::unique_ptr<GameObject>& object) {return object->IsFlaggedForDeletion(); });
 }
 
-Scene::~Scene() = default;
+Scene::~Scene() noexcept = default;
 
 Scene::Scene(Scene&& other) noexcept :
-	m_Name{std::move(other.m_Name)},m_Objects{std::move(other.m_Objects)} 
+	m_Objects{std::move(other.m_Objects)},m_Id{other.m_Id}
 {
 }
 

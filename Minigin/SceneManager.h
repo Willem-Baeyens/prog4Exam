@@ -1,16 +1,16 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
-#include <vector>
 #include <string>
-#include <memory>
-#include "GameObject.h"
 
 class Scene;
-
 namespace SceneManager
 {
-	Scene& CreateScene(const std::string& name);
+	Scene& CreateScene(std::uint64_t id);
+
+	void SetActiveScene(Scene* scene);
+	void SetActiveScene(std::uint64_t id);
+	Scene* GetScene(std::uint64_t id);
 
 	void Update();
 	void LateUpdate();

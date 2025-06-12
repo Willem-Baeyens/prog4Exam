@@ -6,9 +6,8 @@
 
 #include <SDL.h>
 
-
 #include "Minigin.h"
-
+#include "SDBM_Hash.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "Scene.h"
@@ -24,7 +23,7 @@
 
 void Load()
 {
-	auto& scene = SceneManager::CreateScene("Demo");
+	auto& scene = SceneManager::CreateScene(SDBM_Hash("Demo"));
 	
 	Font* LinguaFontPtr = ResourceManager::LoadFont("Lingua.otf", 24);
 	

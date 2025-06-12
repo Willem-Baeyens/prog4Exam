@@ -12,7 +12,7 @@ class TextureRenderer final : public Component
 public:
 	TextureRenderer(Texture2D* texturePtr,GameObject* ownerPtr);
 
-	virtual void Render() override;
+	void Render() override;
 private:
 	Texture2D*	m_TexturePtr;
 };
