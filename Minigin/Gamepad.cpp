@@ -14,9 +14,9 @@ public:
 	Impl(int controllerIndex);
 	void ProcessInput();
 
-	bool WasPressedThisFrame(int button) const;
-	bool WasReleasedThisFrame(int button) const;
-	bool IsDown(int button) const;
+	[[nodiscard]] bool WasPressedThisFrame(int button) const;
+	[[nodiscard]] bool WasReleasedThisFrame(int button) const;
+	[[nodiscard]] bool IsDown(int button) const;
 
 	void AddBinding(GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger = TriggerType::released);
 private:
@@ -53,17 +53,17 @@ void Gamepad::ProcessInput()
 	m_Impl->ProcessInput();
 }
 
-bool Gamepad::WasPressedThisFrame(int button) const
+[[nodiscard]] bool Gamepad::WasPressedThisFrame(int button) const
 {
 	return m_Impl->WasPressedThisFrame(button);
 }
 
-bool Gamepad::WasReleasedThisFrame(int button) const
+[[nodiscard]] bool Gamepad::WasReleasedThisFrame(int button) const
 {
 	return m_Impl->WasReleasedThisFrame(button);
 }
 
-bool Gamepad::IsDown(int button) const
+[[nodiscard]] bool Gamepad::IsDown(int button) const
 {
 	return m_Impl->IsDown(button);
 }
@@ -89,19 +89,19 @@ void Gamepad::Impl::ProcessInput()
 	m_ButtonsReleasedThisFrame = buttonsChanged & (~m_CurrentState.Gamepad.wButtons);
 
 
-	std::for_each(m_InputBindingsPressedThisFrame.cbegin(), m_InputBindingsPressedThisFrame.cend(), [this](const InputBinding& binding) {
+	std::ranges::for_each(m_InputBindingsPressedThisFrame, [this](const InputBinding& binding) {
 		if (WasPressedThisFrame(binding.button))
 		{
 			binding.command->Execute();
 		}});
 
-	std::for_each(m_InputBindingsReleasedThisFrame.cbegin(), m_InputBindingsReleasedThisFrame.cend(), [this](const InputBinding& binding) {
+	std::ranges::for_each(m_InputBindingsReleasedThisFrame, [this](const InputBinding& binding) {
 		if (WasReleasedThisFrame(binding.button))
 		{
 			binding.command->Execute();
 		}});
 
-	std::for_each(m_InputBindingsDown.cbegin(), m_InputBindingsDown.cend(), [this](const InputBinding& binding) {
+	std::ranges::for_each(m_InputBindingsDown, [this](const InputBinding& binding) {
 		if (IsDown(binding.button))
 		{
 			binding.command->Execute();
@@ -128,10 +128,10 @@ void Gamepad::Impl::AddBinding(GamepadButton button, std::unique_ptr<Command> co
 	switch (trigger)
 	{
 	case TriggerType::pressed:
-		m_InputBindingsPressedThisFrame.push_back(InputBinding{ static_cast<int>(button),std::move(command) });break;
+		m_InputBindingsPressedThisFrame.emplace_back(static_cast<int>(button),std::move(command));break;
 	case TriggerType::down:
-		m_InputBindingsDown.push_back(InputBinding{ static_cast<int>(button),std::move(command) });break;
+		m_InputBindingsDown.emplace_back(static_cast<int>(button), std::move(command));break;
 	case TriggerType::released:
-		m_InputBindingsReleasedThisFrame.push_back(InputBinding{ static_cast<int>(button),std::move(command) });break;
+		m_InputBindingsReleasedThisFrame.emplace_back(static_cast<int>(button),std::move(command));break;
 	}
 }

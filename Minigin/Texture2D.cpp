@@ -21,9 +21,9 @@ SDL_Texture* Texture2D::GetSDLTexture() const
 	return m_Texture;
 }
 
-Texture2D::Texture2D(const std::string &fullPath)
+Texture2D::Texture2D(const std::string &fullPath):
+	m_Texture{ IMG_LoadTexture(Renderer::GetSDLRenderer(), fullPath.c_str()) }
 {
-	m_Texture = IMG_LoadTexture(Renderer::GetSDLRenderer(), fullPath.c_str());
 	if (m_Texture == nullptr)
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 }

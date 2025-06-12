@@ -37,7 +37,7 @@ namespace SceneManager
 
 	Scene* GetScene(std::uint64_t id)
 	{
-		auto matchingIterator{ std::find_if(Scenes.begin(),Scenes.end(),[id](const std::unique_ptr<Scene>& scene) {return scene->GetId() == id; }) };
+		auto matchingIterator{ std::ranges::find_if(Scenes,[id](const std::unique_ptr<Scene>& scene) {return scene->GetId() == id; }) };
 		if (matchingIterator != Scenes.end())
 		{
 			return matchingIterator->get();

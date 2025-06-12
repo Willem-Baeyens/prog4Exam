@@ -1,13 +1,13 @@
 #include <glm.hpp>
-#define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 
 #include "Rotator.h"
 #include "GameObject.h"
 #include "EngineTime.h"
+#include <numbers>
 
 
-Rotator::Rotator(float radius, float secondsPerRotation,GameObject* pivotObject,GameObject* owner):
+Rotator::Rotator(float radius, GameObject* pivotObject, float secondsPerRotation, GameObject* owner):
 	Component(owner), 
 	m_SecondsPerRotation{secondsPerRotation}
 {
@@ -19,7 +19,7 @@ Rotator::Rotator(float radius, float secondsPerRotation,GameObject* pivotObject,
 
 void Rotator::Update()
 {
-	constexpr float twoPi{ static_cast<float>(M_PI) * 2.f };
+	constexpr float twoPi{ std::numbers::pi_v<float> * 2.f };
 	const float angle{ twoPi * m_SecondsPerRotation * Time::GetDeltaTime() };
 
 	const float cosine{ cos(angle) };

@@ -31,7 +31,7 @@ namespace ResourceManager
 		return LoadedTextures.at(filename).get();
 	}
 
-	Font* LoadFont(const std::string file, uint8_t size)
+	Font* LoadFont(const std::string& file, uint8_t size)
 	{
 		const auto fullPath = DataPath/file;
 		const auto filename = std::filesystem::path(fullPath).filename().string();

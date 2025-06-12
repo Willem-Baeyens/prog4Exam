@@ -5,7 +5,7 @@
 class Rotator : public Component
 {
 public:
-	Rotator(float radius, float SecondsPerRotation,GameObject* pivotObject, GameObject* owner);
+	Rotator(float radius,GameObject* pivotObject, float SecondsPerRotation, GameObject* owner);
 
 	virtual void Update() override;
 private:

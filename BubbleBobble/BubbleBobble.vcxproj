@@ -86,20 +86,24 @@
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <ClangTidyChecks>-checks=clang-analyzer-*,cppcoreguidelines-*,bugprone-*,modernize-*,performance-*,portability-*,-cppcoreguidelines-avoid-magic-numbers,-modernize-avoid-bind,-cppcoreguidelines-pro-type-union-access,-bugprone-easily-swappable-parameters,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-non-const-global-variables,-bugprone-easily-swappable-parameters,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-constant-array-index</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <ClangTidyChecks>-checks=clang-analyzer-*,cppcoreguidelines-*,bugprone-*,modernize-*,performance-*,portability-*,-cppcoreguidelines-avoid-magic-numbers,-modernize-avoid-bind,-cppcoreguidelines-pro-type-union-access,-bugprone-easily-swappable-parameters,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-non-const-global-variables,-bugprone-easily-swappable-parameters,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-constant-array-index</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>-checks=clang-analyzer-*,cppcoreguidelines-*,bugprone-*,modernize-*,performance-*,portability-*,-cppcoreguidelines-avoid-magic-numbers,-modernize-avoid-bind,-cppcoreguidelines-pro-type-union-access,-bugprone-easily-swappable-parameters,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-non-const-global-variables,-bugprone-easily-swappable-parameters,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-constant-array-index</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>-checks=clang-analyzer-*,cppcoreguidelines-*,bugprone-*,modernize-*,performance-*,portability-*,-cppcoreguidelines-avoid-magic-numbers,-modernize-avoid-bind,-cppcoreguidelines-pro-type-union-access,-bugprone-easily-swappable-parameters,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-non-const-global-variables,-bugprone-easily-swappable-parameters,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-constant-array-index</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

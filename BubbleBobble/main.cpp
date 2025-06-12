@@ -75,9 +75,12 @@ void Load()
 	scene.Add(std::move(bubble));
 	scene.Add(std::move(bobble));
 	scene.Add(std::move(fpsCounter));
+
+	using namespace SceneManager;
+	
 }
 
-int main(int, char* []) {
+int SDL_main(int, char* []) {
 	Minigin engine("../Data/");
 	engine.Run(Load);
 	return 0;

@@ -6,9 +6,9 @@
 
 #include <iostream>
 
-TextRenderer::TextRenderer(const std::string& text, Font* fontPtr, GameObject* ownerPtr):
+TextRenderer::TextRenderer(std::string text, Font* fontPtr, GameObject* ownerPtr):
 	Component(ownerPtr),
-	m_Text {text}, m_FontPtr{ fontPtr },m_TextTextureUptr{nullptr}
+	m_Text {std::move(text)}, m_FontPtr{ fontPtr },m_TextTextureUptr{nullptr}
 {
 	UpdateTexture();
 }

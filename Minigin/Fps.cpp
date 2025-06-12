@@ -23,7 +23,7 @@ void Fps::Update()
 	{
 		const float totalDeltaTime{std::accumulate(m_DeltaTimes.begin(),m_DeltaTimes.end(),0.f)};
 		std::stringstream fpsStream;
-		fpsStream << std::fixed << std::setprecision(1) << m_DeltaTimes.size()/totalDeltaTime;
+		fpsStream << std::fixed << std::setprecision(1) << static_cast<float>(m_DeltaTimes.size())/totalDeltaTime;
 		
 		m_TextRendererPtr->SetText("FPS: " + fpsStream.str());
 		m_DeltaTimeIndex = 0;

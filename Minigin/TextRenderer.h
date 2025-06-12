@@ -11,7 +11,7 @@ class Font;
 class TextRenderer final: public Component
 {
 public:
-	TextRenderer(const std::string& text, Font* fontPtr, GameObject* ownerPtr);
+	TextRenderer(std::string text, Font* fontPtr, GameObject* ownerPtr);
 
 	virtual void Render() override;
 

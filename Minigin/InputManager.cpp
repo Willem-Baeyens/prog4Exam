@@ -33,7 +33,7 @@ namespace InputManager
 
 				if (!KeysDown[e.key.keysym.scancode])
 				{
-					auto binding = std::find_if(InputBindingsPressedThisFrame.cbegin(), InputBindingsPressedThisFrame.cend(), bindsButton);
+					auto binding = std::ranges::find_if(InputBindingsPressedThisFrame, bindsButton);
 					if (binding != InputBindingsPressedThisFrame.cend())
 					{
 						binding->command->Execute();
@@ -45,7 +45,7 @@ namespace InputManager
 		
 			if (e.type == SDL_KEYUP)
 			{
-				auto binding = std::find_if(InputBindingsReleasedThisFrame.cbegin(), InputBindingsReleasedThisFrame.cend(), bindsButton);
+				auto binding = std::ranges::find_if(InputBindingsReleasedThisFrame, bindsButton);
 				if (binding != InputBindingsReleasedThisFrame.cend())
 				{
 					binding->command->Execute();
@@ -56,7 +56,7 @@ namespace InputManager
 		}
 		
 
-		std::for_each(InputBindingsDown.cbegin(), InputBindingsDown.cend(),
+		std::ranges::for_each(InputBindingsDown,
 			[](const InputBinding& inputBinding)
 			{
 				if (KeysDown[inputBinding.button])
@@ -65,7 +65,7 @@ namespace InputManager
 				}
 			});
 		
-		std::for_each(GamePads.begin(), GamePads.end(), 
+		std::ranges::for_each(GamePads,
 			[](Gamepad& gamepad) 
 			{
 				gamepad.ProcessInput(); 
@@ -78,18 +78,18 @@ namespace InputManager
 		switch (trigger)
 		{
 		case TriggerType::pressed:
-			InputBindingsPressedThisFrame.push_back(InputBinding{ button,std::move(command) });
+			InputBindingsPressedThisFrame.emplace_back(button,std::move(command));
 			break;
 		case TriggerType::down:
-			InputBindingsDown.push_back(InputBinding{ button,std::move(command) });
+			InputBindingsDown.emplace_back(button,std::move(command));
 			break;
 		case TriggerType::released:
-			InputBindingsReleasedThisFrame.push_back(InputBinding{ button,std::move(command) });
+			InputBindingsReleasedThisFrame.emplace_back(button,std::move(command));
 			break;
 		}
 	}
 
-	void AddGamepadBinding(int controllerID, GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger)
+	void AddGamepadBinding(const int controllerID, GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger)
 	{
 		GamePads[controllerID].AddBinding(button, std::move(command), trigger);
 	}

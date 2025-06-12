@@ -143,13 +143,13 @@ void GameObject::SetWorldPositionDirty()
 
 void GameObject::DeleteComponents()
 {
-	auto startOfFlaggedComponents{std::partition(m_Components.begin(),m_Components.end(),[](const std::unique_ptr<Component>& component) {return !component->IsFlaggedForDeletion(); })};
-	m_Components.erase(startOfFlaggedComponents, m_Components.end());
+	auto startOfFlaggedComponents{std::ranges::partition(m_Components,[](const std::unique_ptr<Component>& component) {return !component->IsFlaggedForDeletion(); })};
+	m_Components.erase(startOfFlaggedComponents.begin(), m_Components.end());
 }
 
 bool GameObject::IsChild(GameObject* object)
 {
-	return m_Children.cend() != std::find(m_Children.cbegin(), m_Children.cend(), object);
+	return m_Children.cend() != std::ranges::find(m_Children, object);
 }
 
 void GameObject::RemoveChild(GameObject* object)

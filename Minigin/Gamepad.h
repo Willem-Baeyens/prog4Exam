@@ -36,9 +36,9 @@ public:
 
 	void ProcessInput();
 
-	bool WasPressedThisFrame(int button) const;
-	bool WasReleasedThisFrame(int button) const;
-	bool IsDown(int button) const;
+	[[nodiscard]] bool WasPressedThisFrame(int button) const;
+	[[nodiscard]] bool WasReleasedThisFrame(int button) const;
+	[[nodiscard]] bool IsDown(int button) const;
 
 	void AddBinding(GamepadButton button, std::unique_ptr<Command> command, TriggerType trigger = TriggerType::released);
 private:

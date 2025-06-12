@@ -25,14 +25,14 @@ void Scene::Add(std::unique_ptr<GameObject> object)
 
 void Scene::Remove(std::unique_ptr<GameObject> object)
 {
-	std::for_each(std::remove(m_Objects.begin(), m_Objects.end(), object), m_Objects.end(), 
+	std::for_each(std::ranges::remove(m_Objects, object).begin(), m_Objects.end(),
 		[](std::unique_ptr<GameObject>& object) {object->FlagForDeletion(); });
 }
 
 void Scene::RemoveAll()
 {
-	std::for_each(m_Objects.begin(), m_Objects.end(),
-		[](std::unique_ptr<GameObject>& object) {object->FlagForDeletion(); });
+	std::ranges::for_each(m_Objects, [](std::unique_ptr<GameObject>& object) {object->FlagForDeletion(); });
+
 }
 
 void Scene::Update()
