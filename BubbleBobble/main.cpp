@@ -13,13 +13,12 @@
 #include "Scene.h"
 #include "TextRenderer.h"
 #include "TextureRenderer.h"
-#include "Texture2D.h"
 #include "Font.h"
 #include "Fps.h"
 #include "Rotator.h"
 #include "InputManager.h"
 #include "GameObject.h"
-
+#include "ServiceLocator.h"
 
 void Load()
 {
@@ -65,19 +64,13 @@ void Load()
 	InputManager::AddGamepadBinding(0, GamepadButton::DPAD_DOWN, std::move(BobbleMoveDown), TriggerType::down);
 	InputManager::AddGamepadBinding(0, GamepadButton::DPAD_LEFT, std::move(BobbleMoveLeft), TriggerType::down);
 	
-	auto fpsCounter = std::make_unique<GameObject>();
-	fpsCounter->AddComponent<TextRenderer>("", LinguaFontPtr);
-	fpsCounter->AddComponent<Fps>();
-
 	scene.Add(std::move(backGround));
 	scene.Add(std::move(daeLogo));
 	scene.Add(std::move(title));
 	scene.Add(std::move(bubble));
 	scene.Add(std::move(bobble));
-	scene.Add(std::move(fpsCounter));
 
-	using namespace SceneManager;
-	
+	ServiceLocator::GetSoundSystem().PlayMusic("../Data/MainTheme.mp3",64);
 }
 
 int SDL_main(int, char* []) {

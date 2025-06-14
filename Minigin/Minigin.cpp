@@ -13,47 +13,18 @@
 #include "EngineTime.h"
 #include "Font.h"
 #include "Texture2D.h"
-
-SDL_Window* g_Window{};
-
-void PrintSDLVersion()
-{
-	SDL_version version{};
-	SDL_VERSION(&version);
-	printf("We compiled against SDL version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	SDL_GetVersion(&version);
-	printf("We are linking against SDL version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_IMAGE_VERSION(&version);
-	printf("We compiled against SDL_image version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *IMG_Linked_Version();
-	printf("We are linking against SDL_image version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_TTF_VERSION(&version)
-	printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *TTF_Linked_Version();
-	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-}
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 
 Minigin::Minigin(const std::string &dataPath)
 {
-	PrintSDLVersion();
 	
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	g_Window = SDL_CreateWindow(
+	m_Window = SDL_CreateWindow(
 		"Programming 4 assignment - 2DAE10 Willem Baeyens",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
@@ -61,23 +32,26 @@ Minigin::Minigin(const std::string &dataPath)
 		480,
 		SDL_WINDOW_OPENGL
 	);
-	if (g_Window == nullptr) 
+	if (m_Window == nullptr) 
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::Initialize(g_Window);
+	Renderer::Initialize(m_Window);
 
 	InputManager::Initialize();
 
 	ResourceManager::Initiliaze(dataPath);
+
+	ServiceLocator::RegisterSoundSystem(std::make_unique<SDL_SoundSystem>());
+
 }
 
 Minigin::~Minigin() noexcept
 {
 	Renderer::Destroy();
-	SDL_DestroyWindow(g_Window);
-	g_Window = nullptr;
+	SDL_DestroyWindow(m_Window);
+	m_Window = nullptr;
 	SDL_Quit();
 }
 

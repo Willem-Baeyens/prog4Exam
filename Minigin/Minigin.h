@@ -19,5 +19,6 @@ public:
 
 private:
 	const float m_MaxFps{ 120.f };
+	SDL_Window* m_Window{};
 };
 #endif // !MINIGIN_H
