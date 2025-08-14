@@ -29,18 +29,8 @@ SDL_SoundSystem::~SDL_SoundSystem() = default;
 
 void SDL_SoundSystem::PlayMusic(const std::string& file, int volume)
 {
-	try
-	{
-		m_Impl->PlayMusic(file, volume);
-	}
-	catch (const std::runtime_error& e)
-	{
-		std::cout << e.what() << "\n";
-	}
-	catch(...)
-	{
-		std::cout << "Couldn't play music\n";
-	}
+
+	m_Impl->PlayMusic(file, volume);
 }
 
 void SDL_SoundSystem::PlaySound(const std::string& file, int volume)
