@@ -77,7 +77,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
@@ -88,11 +88,10 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <ClangTidyChecks>-checks=clang-analyzer-*,cppcoreguidelines-*,bugprone-*,modernize-*,performance-*,portability-*,-cppcoreguidelines-avoid-magic-numbers,-modernize-avoid-bind,-cppcoreguidelines-pro-type-union-access,-bugprone-easily-swappable-parameters,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-non-const-global-variables,-bugprone-easily-swappable-parameters,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-constant-array-index</ClangTidyChecks>
-    <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
@@ -104,7 +103,6 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <ClangTidyChecks>-checks=clang-analyzer-*,cppcoreguidelines-*,bugprone-*,modernize-*,performance-*,portability-*,-cppcoreguidelines-avoid-magic-numbers,-modernize-avoid-bind,-cppcoreguidelines-pro-type-union-access,-bugprone-easily-swappable-parameters,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-non-const-global-variables,-bugprone-easily-swappable-parameters,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-constant-array-index</ClangTidyChecks>
-    <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

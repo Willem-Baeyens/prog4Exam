@@ -96,4 +96,3 @@ void Minigin::Run(const std::function<void()>& load)
 //mark classes final
 //pimpl SDL
 //remove outdated includes
-//static lib not needed in build
