@@ -15,6 +15,9 @@ namespace Renderer
 	void RenderTexture(const Texture2D& texture, float x, float y);
 	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) ;
 
+	void DrawRect(float top, float left, float bottom, float right);
+	void DrawRect(float top, float left, float bottom, float right, const SDL_Color& color);
+
 	SDL_Renderer* GetSDLRenderer();
 
 	const SDL_Color& GetBackgroundColor();

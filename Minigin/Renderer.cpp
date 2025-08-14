@@ -76,6 +76,18 @@ namespace Renderer
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 	}
 
+	void DrawRect(float top, float left, float bottom, float right)
+	{
+		SDL_FRect rect{ top,left,right - left,bottom - top };
+		SDL_RenderDrawRectF(Renderer, &rect);
+	}
+
+	void DrawRect(float top, float left, float bottom, float right, const SDL_Color& color)
+	{
+		SDL_SetRenderDrawColor(Renderer, color.r,color.g,color.b,color.a);
+		DrawRect(top, left, bottom, right);
+	}
+
 	SDL_Renderer* GetSDLRenderer()
 	{
 		return Renderer;

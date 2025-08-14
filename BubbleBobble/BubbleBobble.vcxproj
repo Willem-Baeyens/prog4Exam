@@ -20,10 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Minigin\Rotator.cpp" />
+    <ClCompile Include="ChangeDirection.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PacmanMovement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\Rotator.h" />
+    <ClInclude Include="ChangeDirection.h" />
+    <ClInclude Include="PacmanMovement.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -28,8 +28,8 @@ Minigin::Minigin(const std::string &dataPath)
 		"Programming 4 assignment - 2DAE10 Willem Baeyens",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		640,
-		480,
+		224,
+		400,
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr) 

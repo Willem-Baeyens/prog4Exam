@@ -5,16 +5,18 @@
 #include "Renderer.h"
 #include "Texture2D.h"
 #include "Font.h"
+#include <iostream>
 
 namespace ResourceManager
 {
 	static std::filesystem::path DataPath{};
 	static std::map<std::string, std::unique_ptr<Texture2D>> LoadedTextures{};
 	static std::map<std::pair<std::string, uint8_t>, std::unique_ptr<Font>> LoadedFonts{};
-
 	void Initiliaze(const std::filesystem::path& data)
 	{
 		DataPath = data;
+
+		LoadTexture("Error.png");
 
 		if (TTF_Init() != 0)
 		{
@@ -27,7 +29,18 @@ namespace ResourceManager
 		const auto fullPath = DataPath / file;
 		const auto filename = std::filesystem::path(fullPath).filename().string();
 		if (LoadedTextures.find(filename) == LoadedTextures.end())
-			LoadedTextures.insert(std::pair(filename, std::make_unique<Texture2D>(fullPath.string())));
+		{
+			try
+			{
+				LoadedTextures.insert(std::pair(filename, std::make_unique<Texture2D>(fullPath.string())));
+			}
+			catch (std::runtime_error err)
+			{
+				std::cout << err.what();
+				return LoadedTextures.at("Error.png").get();
+			}
+		}
+
 		return LoadedTextures.at(filename).get();
 	}
 

@@ -12,28 +12,37 @@
     <Filter Include="Components">
       <UniqueIdentifier>{8d159607-5cb4-4419-adfe-9dd063e0f3d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Headers">
-      <UniqueIdentifier>{52a809ff-201e-4ced-aa6d-dac24b1341a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headers">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Components\Source">
-      <UniqueIdentifier>{e8968520-3642-46d4-b562-6d383f2bed68}</UniqueIdentifier>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{c6c8a7c3-0ba0-4b67-a09b-677af2ed86c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PacmanMovement.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\Minigin\Rotator.cpp">
-      <Filter>Components\Source</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeDirection.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PacmanMovement.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="..\Minigin\Rotator.h">
-      <Filter>Components\Headers</Filter>
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeDirection.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
