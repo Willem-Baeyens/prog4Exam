@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include <glm.hpp>
+class CollisionRect;
 class PacmanMovement final : public Component
 {
 public:
@@ -10,11 +11,14 @@ public:
 	explicit PacmanMovement(GameObject* owner);
 	virtual void Update() override;
 
-	void SetDirection(const glm::vec2& direction);
+	void Turn(const glm::vec2& direction);
 private:
+	void TestOverlap(CollisionRect* collisionRect);
+
 	glm::vec2 m_Direction{ 1,0 };
 	float m_Speed{ 30.f };
 	GameObject* m_OwnerPtr;
+	CollisionRect* m_CollisionRect;
 	int test{ 0 };
 };
 #endif // !PACMANMOVEMENT_H

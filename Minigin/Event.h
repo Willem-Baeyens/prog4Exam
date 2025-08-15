@@ -13,7 +13,7 @@ public:
 		m_Function = function;
 	}
 
-	void Broadcast(ArgsTypes... args)
+	void Broadcast(ArgsTypes... args) const
 	{
 		m_Function(args...);
 	}
@@ -24,7 +24,7 @@ private:
 
 
 template<class... ArgsTypes>
-class MulticastEvent
+class MultiEvent
 {
 public:
 	void BindFunction(const std::function<void(ArgsTypes...)>& function)
@@ -32,7 +32,7 @@ public:
 		m_Functions.push_back(function);
 	}
 
-	void Broadcast(ArgsTypes... args)
+	void Broadcast(ArgsTypes... args) const
 	{
 		std::for_each(m_Functions.begin(), m_Functions.end(), [&args...](const std::function<void(ArgsTypes...)>& function) {function(args...); });
 	}

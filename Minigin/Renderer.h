@@ -5,6 +5,7 @@ class Texture2D;
 struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Color;
+struct rect;
 
 namespace Renderer
 {
@@ -15,8 +16,8 @@ namespace Renderer
 	void RenderTexture(const Texture2D& texture, float x, float y);
 	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) ;
 
-	void DrawRect(float top, float left, float bottom, float right);
-	void DrawRect(float top, float left, float bottom, float right, const SDL_Color& color);
+	void DrawRect(const rect& rect);
+	void DrawRect(const rect& rect, const SDL_Color& color);
 
 	SDL_Renderer* GetSDLRenderer();
 

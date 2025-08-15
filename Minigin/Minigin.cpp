@@ -15,6 +15,7 @@
 #include "Texture2D.h"
 #include "ServiceLocator.h"
 #include "SoundSystem.h"
+#include "CollisionManager.h"
 
 Minigin::Minigin(const std::string &dataPath)
 {
@@ -81,6 +82,7 @@ void Minigin::Run(const std::function<void()>& load)
 		}
 
 		SceneManager::Update();
+		CollisionManager::CheckCollisions();
 		SceneManager::LateUpdate();
 		Renderer::Render();
 		const auto sleep_time = MaxTimePerFrame + currentTime - std::chrono::high_resolution_clock::now();

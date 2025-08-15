@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 #include "Texture2D.h"
 #include <SDL.h>
-
+#include "CollisionRect.h"
 
 int static GetOpenGLDriverIndex()
 {
@@ -76,16 +76,16 @@ namespace Renderer
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 	}
 
-	void DrawRect(float top, float left, float bottom, float right)
+	void DrawRect(const rect& rect)
 	{
-		SDL_FRect rect{ top,left,right - left,bottom - top };
-		SDL_RenderDrawRectF(Renderer, &rect);
+		SDL_FRect SDLrect{ rect.left,rect.top,rect.right - rect.left,rect.bottom - rect.top };
+		SDL_RenderDrawRectF(Renderer, &SDLrect);
 	}
 
-	void DrawRect(float top, float left, float bottom, float right, const SDL_Color& color)
+	void DrawRect(const rect& rect, const SDL_Color& color)
 	{
-		SDL_SetRenderDrawColor(Renderer, color.r,color.g,color.b,color.a);
-		DrawRect(top, left, bottom, right);
+		SDL_SetRenderDrawColor(Renderer, color.r, color.g, color.b, color.a);
+		DrawRect(rect);
 	}
 
 	SDL_Renderer* GetSDLRenderer()

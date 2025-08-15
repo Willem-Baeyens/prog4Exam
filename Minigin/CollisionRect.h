@@ -3,15 +3,33 @@
 
 #include "Component.h"
 #include <SDl_pixels.h>
+#include "Event.h"
+#include <glm.hpp>
+
+struct rect
+{
+	float left, top, right, bottom;
+};
 
 class CollisionRect : public Component
 {
 public:
-	explicit CollisionRect(float top, float left, float bottom, float right,GameObject* owner);
+	explicit CollisionRect(float left, float top, float right, float bottom, GameObject* owner);
+	virtual ~CollisionRect();
 
 	virtual void Render() override;
+
+	void MoveRect(const glm::vec2& movement);
+
+	rect GetRect() const;
+
+	MultiEvent<CollisionRect*>* GetOverlapEvent();
+	void BroadcastOverlap(); 
 private:
-	float m_Top{}, m_Left{}, m_Bottom{}, m_Right{};
+	rect m_Rect;
+
+	MultiEvent<CollisionRect*> m_OnOverlap{};
+
 	static const SDL_Color m_DebugDrawColor;
 };
 #endif // !COLLISION_RECT_H

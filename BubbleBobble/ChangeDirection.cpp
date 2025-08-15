@@ -10,5 +10,5 @@ ChangeDirection::ChangeDirection(GameObject* gameObject, const glm::vec2& direct
 
 void ChangeDirection::Execute()
 {
-	m_PacmanMovementPtr->SetDirection(m_Direction);
+	m_PacmanMovementPtr->Turn(m_Direction);
 }

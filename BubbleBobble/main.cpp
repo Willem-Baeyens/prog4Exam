@@ -23,6 +23,7 @@
 #include "ChangeDirection.h"
 #include "CollisionRect.h"
 
+
 void Load()
 {
 	auto& scene = SceneManager::CreateScene(SDBM_Hash("Demo"));
@@ -47,8 +48,12 @@ void Load()
 	auto msPacman = std::make_unique<GameObject>();
 	msPacman->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("msPacman.png"));
 	msPacman->SetWorldPosition(0, 100);
-	msPacman->AddComponent<PacmanMovement>(glm::vec2{},50.f);
 	msPacman->AddComponent<CollisionRect>(0.f, 100.f, 16.f, 116.f);
+	msPacman->AddComponent<PacmanMovement>(glm::vec2{},50.f);
+
+
+	auto testPellet = std::make_unique<GameObject>();
+	testPellet->AddComponent<CollisionRect>(50.f, 105.f, 66.f, 116.f);
 
 	auto fpsCounter = std::make_unique<GameObject>();
 	fpsCounter->AddComponent<TextRenderer>("",LinguaFontPtr);
@@ -88,9 +93,12 @@ void Load()
 	//scene.Add(std::move(backGround));
 	//scene.Add(std::move(daeLogo));
 	//scene.Add(std::move(title));
+
+
 	scene.Add(std::move(maze));
 	scene.Add(std::move(msPacman));
 	scene.Add(std::move(fpsCounter));
+	scene.Add(std::move(testPellet));
 }
 
 int SDL_main(int, char* []) {
