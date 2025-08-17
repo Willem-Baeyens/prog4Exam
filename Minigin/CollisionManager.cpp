@@ -7,7 +7,7 @@ namespace CollisionManager
 {
 	std::vector<CollisionRect*> collisionRects{};
 
-	void RegisterRect(CollisionRect*  collisionRect)
+	void RegisterRect(CollisionRect* collisionRect)
 	{
 		collisionRects.push_back(collisionRect);
 	}
@@ -27,7 +27,7 @@ namespace CollisionManager
 				if (collRect == collRect2) continue;
 				if (AreOverlapping(collRect->GetRect(), collRect2->GetRect()))
 				{
-					collRect->BroadcastOverlap();
+					collRect->BroadcastOverlap(collRect2);
 				}
 			}
 		}

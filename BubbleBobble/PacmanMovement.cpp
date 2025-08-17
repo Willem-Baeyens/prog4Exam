@@ -1,7 +1,6 @@
 #include "PacmanMovement.h"
 #include "GameObject.h"
 #include "EngineTime.h"
-#include <iostream>
 #include "CollisionRect.h"
 #include "Game.h"
 #include "Renderer.h"
@@ -16,9 +15,6 @@ PacmanMovement::PacmanMovement(float speed, GameObject* owner):
 	m_SpritesheetRenderer = m_OwnerPtr->GetComponent<SpritesheetRenderer>();
 	assert(m_CollisionRect);
 	assert(m_SpritesheetRenderer);
-
-	std::function<void(CollisionRect*)> overlapFunction = std::bind(&PacmanMovement::TestOverlap, this, std::placeholders::_1);
-	m_CollisionRect->GetOverlapEvent()->BindFunction(overlapFunction);
 }
 
 PacmanMovement::PacmanMovement(GameObject* owner):
@@ -75,7 +71,6 @@ void PacmanMovement::Update()
 		{
 			newPosition = m_TargetPosition;
 			Turn(m_StoredTurn);
-			m_StoredTurn = { 0,0 };
 		}
 
 		else
@@ -90,8 +85,6 @@ void PacmanMovement::Update()
 				UpdateTargetPosition();
 			}
 		}
-
-
 	}
 
 	m_OwnerPtr->SetLocalPosition(newPosition);
@@ -102,9 +95,9 @@ void PacmanMovement::Render()
 {
 	if constexpr (Renderer::DRAWDEBUG)
 	{
-		glm::vec2 currentTilePos = Pacman::GetCurrentLevel()->TilePosToWorldPos(m_CurrentTile);
-		Renderer::DrawRect(rect{ currentTilePos.x,currentTilePos.y,currentTilePos.x + 8,currentTilePos.y + 8 }, SDL_Color{ 0,0,255,255 });
-		Renderer::DrawRect(rect{ m_OwnerPtr->GetWorldPosition().x,m_OwnerPtr->GetWorldPosition().y,m_OwnerPtr->GetWorldPosition().x + 8,m_OwnerPtr->GetWorldPosition().y + 8}, SDL_Color{255,255,0,255});
+		//glm::vec2 currentTilePos = Pacman::GetCurrentLevel()->TilePosToWorldPos(m_CurrentTile);
+		//Renderer::DrawRect(rect{ currentTilePos.x,currentTilePos.y,currentTilePos.x + 8,currentTilePos.y + 8 }, SDL_Color{ 0,0,255,255 });
+		//Renderer::DrawRect(rect{ m_OwnerPtr->GetWorldPosition().x,m_OwnerPtr->GetWorldPosition().y,m_OwnerPtr->GetWorldPosition().x + 8,m_OwnerPtr->GetWorldPosition().y + 8}, SDL_Color{255,255,0,255});
 		Renderer::DrawRect(rect{ m_TargetPosition.x,m_TargetPosition.y,m_TargetPosition.x + 4,m_TargetPosition.y + 4 }, SDL_Color{ 255,255,255,255 });
 	}
 }
@@ -112,8 +105,6 @@ void PacmanMovement::Render()
 void PacmanMovement::TryTurn(const TilePos& direction)
 {
 	if (m_TileDirection == direction) return;
-	//if (Pacman::GetCurrentLevel()->IsWall(m_CurrentTile + direction) and Pacman::GetCurrentLevel()->IsWall(m_CurrentTile + m_TileDirection + direction)) return;
-
 
 	bool verticalToHorizontal{ m_TileDirection.y != 0 and direction.y == 0 };
 	bool horizontalToVertical{m_TileDirection.x != 0 and direction.x == 0};
@@ -132,7 +123,6 @@ void PacmanMovement::TryTurn(const TilePos& direction)
 		{
 			m_StoredTurn = direction;//store turn until reaching current targettile
 			UpdateTargetPosition();
-			std::cout << "Stored turn\n";
 		}
 	}
 }
@@ -142,6 +132,11 @@ void PacmanMovement::TryTurn(const TilePos& direction)
 void PacmanMovement::SetStartPos(TilePos start)
 {
 	m_CurrentTile = start;
+}
+
+TilePos PacmanMovement::GetCurrentTile() const
+{
+	return m_CurrentTile;
 }
 
 
@@ -169,12 +164,10 @@ void PacmanMovement::Turn(const TilePos& direction)
 	}
 
 	m_SpritesheetRenderer->SetPlaying(true);
+	m_StoredTurn = { 0,0 };
 	UpdateTargetPosition();
 }
 
-void PacmanMovement::TestOverlap(CollisionRect* )
-{
-}
 
 void PacmanMovement::UpdateTargetPosition()
 {

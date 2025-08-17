@@ -5,8 +5,8 @@
 
 const SDL_Color CollisionRect::m_DebugDrawColor = { 39,250,0,255 };
 
-CollisionRect::CollisionRect(float left, float top, float right, float bottom,GameObject* owner):
-	Component(owner),m_Rect{left,top,right,bottom}
+CollisionRect::CollisionRect(float left, float top, float right, float bottom, ColliderType type,GameObject* owner):
+	Component(owner),m_Rect{left,top,right,bottom},m_Type{type}
 {
 	CollisionManager::RegisterRect(this);
 }
@@ -37,13 +37,19 @@ rect CollisionRect::GetRect() const
 	return m_Rect;
 }
 
+ColliderType CollisionRect::GetType() const
+{
+	return m_Type;
+}
+
 
 MultiEvent<CollisionRect*>* CollisionRect::GetOverlapEvent()
 {
 	return &m_OnOverlap;
 }
 
-void CollisionRect::BroadcastOverlap()
+void CollisionRect::BroadcastOverlap(CollisionRect* collider)
 {
-	m_OnOverlap.Broadcast(this);
+	m_OnOverlap.Broadcast(collider);
 }
+

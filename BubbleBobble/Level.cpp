@@ -6,6 +6,9 @@
 #include <fstream>
 #include <iostream>
 #include "PacmanMovement.h"
+#include "CollisionRect.h"
+#include "PelletController.h"
+#include "BlinkyController.h"
 
 Level::Level(const std::filesystem::path& path, Scene* scene, GameObject* player, GameObject* Blinky, GameObject* Pinky, GameObject* Inky, GameObject* Sue)
 {
@@ -18,6 +21,7 @@ Level::Level(const std::filesystem::path& path, Scene* scene, GameObject* player
 
 	scene->Add(std::move(maze));
 
+	m_WallTiles.resize(868, false);
 
 	std::ifstream fs{ path,std::ios::binary | std::ios::in };
 	if (!fs.is_open())
@@ -40,7 +44,7 @@ Level::Level(const std::filesystem::path& path, Scene* scene, GameObject* player
 
 bool Level::IsWall(TilePos tilepos) const
 {
-	return std::any_of(m_WallTiles.cbegin(), m_WallTiles.cend(), [&tilepos](TilePos element) {return tilepos == element; });
+	return m_WallTiles[tilepos.x + tilepos.y*m_LevelWidth];
 }
 
 void Level::ProcessTile(int tileIndex, TileType type,Scene* scene, GameObject* player, GameObject* Blinky, GameObject* Pinky, GameObject* Inky, GameObject* Sue)
@@ -54,7 +58,7 @@ void Level::ProcessTile(int tileIndex, TileType type,Scene* scene, GameObject* p
 		CreatePellet(tilePos, scene);
 		break;
 	case TileType::wall:
-		m_WallTiles.push_back(tilePos);
+		m_WallTiles[tilePos.x + tilePos.y*m_LevelWidth] = true;
 		break;
 	case TileType::powerPellet:
 		break;
@@ -63,9 +67,11 @@ void Level::ProcessTile(int tileIndex, TileType type,Scene* scene, GameObject* p
 	case TileType::pacman:
 		player->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
 		player->GetComponent<PacmanMovement>()->SetStartPos(tilePos);
+		player->GetComponent<CollisionRect>()->MoveRect(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
 		break;
 	case TileType::blinky:
 		Blinky->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
+		Blinky->GetComponent<BlinkyController>()->SetCurrentTile(tilePos);
 		break;
 	case TileType::pinky:
 		Pinky->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
@@ -84,8 +90,11 @@ void Level::CreatePellet(TilePos tilePos, Scene* scene)
 	auto pellet = std::make_unique<GameObject>();
 	pellet->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("pellet.png"));
 	glm::vec2 pelletPos = TilePosToWorldPos(tilePos) + glm::vec2{ 3,3 };
+	pellet->AddComponent<CollisionRect>(pelletPos.x, pelletPos.y, pelletPos.x + 2, pelletPos.y + 2,ColliderType::pellet);
+	pellet->AddComponent<PelletController>();
 	pellet->SetWorldPosition(pelletPos);
 	scene->Add(std::move(pellet));
+	++m_PelletsRemaining;
 }
 
 glm::vec2 Level::TilePosToWorldPos(TilePos tilePos) const

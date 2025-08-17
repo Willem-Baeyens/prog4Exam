@@ -18,9 +18,10 @@ public:
 
 	void SetStartPos(TilePos start);
 
+	TilePos GetCurrentTile() const;
+
 private:
 	void Turn(const TilePos& direction);
-	void TestOverlap(CollisionRect* collRect);
 	void UpdateTargetPosition();
 
 

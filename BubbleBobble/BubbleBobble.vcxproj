@@ -20,18 +20,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Minigin\Rotator.cpp" />
+    <ClCompile Include="BlinkyController.cpp" />
     <ClCompile Include="ChangeDirection.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PacmanController.cpp" />
     <ClCompile Include="PacmanMovement.cpp" />
+    <ClCompile Include="PelletController.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\Rotator.h" />
+    <ClInclude Include="BlinkyController.h" />
     <ClInclude Include="ChangeDirection.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="PacmanController.h" />
     <ClInclude Include="PacmanMovement.h" />
+    <ClInclude Include="PelletController.h" />
+    <ClInclude Include="ScoreComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

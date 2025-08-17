@@ -25,6 +25,9 @@
 #include "Level.h"
 #include "Game.h"
 #include "SpritesheetRenderer.h"
+#include "PacmanController.h"
+#include "ScoreComponent.h"
+#include "BlinkyController.h"
 
 void Load()
 {
@@ -35,11 +38,14 @@ void Load()
 	auto msPacman = std::make_unique<GameObject>();
 	msPacman->AddComponent<SpritesheetRenderer>(ResourceManager::LoadTexture("msPacmanSheetRight.png"), 4, .1f,false);
 	msPacman->SetWorldPosition(0, 100);
-	msPacman->AddComponent<CollisionRect>(0.f, 100.f, 16.f, 116.f);
-	msPacman->AddComponent<PacmanMovement>(50.f);
+	msPacman->AddComponent<CollisionRect>(4.f, 4.f, 12.f, 12.f,ColliderType::pacman);
+	msPacman->AddComponent<PacmanMovement>(64.f);
+	msPacman->AddComponent<PacmanController>();
 
 	auto score = std::make_unique<GameObject>();
-	score->AddComponent<TextRenderer>("1 UP 570",EmulogicFontPtr);
+	score->AddComponent<TextRenderer>("1UP 0",EmulogicFontPtr);
+	score->AddComponent<ScoreComponent>(msPacman->GetComponent<PacmanController>());
+	score->SetWorldPosition(glm::vec2{ 10,90 });
 
 	auto pacmanTurnUp = std::make_unique<ChangeDirection>(msPacman.get(),TilePos{0,-1});
 	auto pacmanTurnLeft = std::make_unique<ChangeDirection>(msPacman.get(), TilePos{ -1,0 });
@@ -53,6 +59,7 @@ void Load()
 
 	auto blinky = std::make_unique<GameObject>();
 	blinky->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("blinky.png"));
+	blinky->AddComponent<BlinkyController>(msPacman->GetComponent<PacmanMovement>());
 
 	auto pinky = std::make_unique<GameObject>();
 	pinky->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("pinky.png"));
@@ -65,6 +72,8 @@ void Load()
 
 	auto testLevel = std::make_unique<Level>(ResourceManager::GetDataPath() / "levelOne.bin", &scene, msPacman.get(), blinky.get(), pinky.get(), inky.get(), sue.get());
 	Pacman::SetCurrentLevel(std::move(testLevel));
+
+	Pacman::BindEvents(msPacman->GetComponent<PacmanController>());
 
 	scene.Add(std::move(msPacman));
 	scene.Add(std::move(blinky));

@@ -1,16 +1,32 @@
 #include "Game.h"
+#include <iostream>
+#include "PacmanController.h"
 
 namespace Pacman
 {
-	std::unique_ptr<Level> m_CurrentLevel{};
+	std::unique_ptr<Level> CurrentLevel{};
+	int Score{};
 	Level* GetCurrentLevel()
 	{
-		return m_CurrentLevel.get();
+		return CurrentLevel.get();
 	}
 
 	void SetCurrentLevel(std::unique_ptr<Level> level)
 	{
-		m_CurrentLevel = std::move(level);
+		CurrentLevel = std::move(level);
 	}
+
+	void AddScore(int score)
+	{
+		Score += score;
+		std::cout << Score << "\n";
+	}
+
+	void BindEvents(PacmanController* )
+	{
+		//pacmanController->GetPacmanEatsPelletEvent()->BindFunction(std::bind(AddScore, 10));
+	}
+
+
 }
 

@@ -18,6 +18,8 @@ struct TilePos
 	{
 		return TilePos{ x + other.x,y + other.y };
 	}
+
+	TilePos operator-() { return TilePos{ -x,-y }; }
 };
 
 enum class TileType : char
@@ -49,10 +51,11 @@ private:
 	void CreatePellet(TilePos tilePos, Scene* scene);
 
 	const int m_LevelWidth{ 28 };
+	int m_PelletsRemaining{};
 
 	glm::vec2 m_MazePos{};
 
-	std::vector<TilePos> m_WallTiles{};
+	std::vector<bool> m_WallTiles{};
 };
 #endif // !LEVEL_H
 

@@ -39,6 +39,18 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PacmanController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PelletController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlinkyController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PacmanMovement.h">
@@ -50,11 +62,23 @@
     <ClInclude Include="ChangeDirection.h">
       <Filter>Commands</Filter>
     </ClInclude>
+    <ClInclude Include="PacmanController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Source Files</Filter>
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PelletController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BlinkyController.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
