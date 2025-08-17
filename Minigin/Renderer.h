@@ -9,12 +9,14 @@ struct rect;
 
 namespace Renderer
 {
-	void Initialize(SDL_Window* window);
+	void Initialize(SDL_Window* window,float scale = 1.f);
 	void Render();
 	void Destroy();
 
 	void RenderTexture(const Texture2D& texture, float x, float y);
-	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) ;
+	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height);
+
+	std::pair<float, float> GetScale();
 
 	void DrawRect(const rect& rect);
 	void DrawRect(const rect& rect, const SDL_Color& color);

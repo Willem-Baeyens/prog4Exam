@@ -22,42 +22,19 @@
 #include "PacmanMovement.h"
 #include "ChangeDirection.h"
 #include "CollisionRect.h"
-
+#include "Level.h"
 
 void Load()
 {
 	auto& scene = SceneManager::CreateScene(SDBM_Hash("Demo"));
 	
-	Font* LinguaFontPtr = ResourceManager::LoadFont("Lingua.otf", 24);
-	
-	auto backGround = std::make_unique<GameObject>();
-	backGround->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("background.tga"));
-
-	auto maze = std::make_unique<GameObject>();
-	maze->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("mazeOne.png"));
-	maze->SetWorldPosition(0, 100);
-
-	auto daeLogo = std::make_unique<GameObject>();
-	daeLogo->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("logo.tga"));
-	daeLogo->SetWorldPosition(216, 180);
-	
-	auto title = std::make_unique<GameObject>();
-	title->AddComponent<TextRenderer>("Programming 4 Assignment", LinguaFontPtr);
-	title->SetWorldPosition(160, 20);
+	//Font* LinguaFontPtr = ResourceManager::LoadFont("Lingua.otf", 24);
 
 	auto msPacman = std::make_unique<GameObject>();
 	msPacman->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("msPacman.png"));
 	msPacman->SetWorldPosition(0, 100);
 	msPacman->AddComponent<CollisionRect>(0.f, 100.f, 16.f, 116.f);
 	msPacman->AddComponent<PacmanMovement>(glm::vec2{},50.f);
-
-
-	auto testPellet = std::make_unique<GameObject>();
-	testPellet->AddComponent<CollisionRect>(50.f, 105.f, 66.f, 116.f);
-
-	auto fpsCounter = std::make_unique<GameObject>();
-	fpsCounter->AddComponent<TextRenderer>("",LinguaFontPtr);
-	fpsCounter->AddComponent<Fps>();
 
 	auto pacmanTurnUp = std::make_unique<ChangeDirection>(msPacman.get(),glm::vec2{0,-1});
 	auto pacmanTurnLeft = std::make_unique<ChangeDirection>(msPacman.get(), glm::vec2{ -1,0 });
@@ -69,36 +46,27 @@ void Load()
 	InputManager::AddKeyboardBinding(SDL_SCANCODE_S, std::move(pacmanTurnDown), TriggerType::down);
 	InputManager::AddKeyboardBinding(SDL_SCANCODE_D, std::move(pacmanTurnRight), TriggerType::down);
 
-	
-	//auto BubbleMoveUp = std::make_unique<Move>(bubble.get(), glm::vec2{ 0.f,-1.f }, 10.f);
-	//auto BubbleMoveLeft = std::make_unique<Move>(bubble.get(), glm::vec2{ -1.f,0.f }, 10.f);
-	//auto BubbleMoveDown = std::make_unique<Move>(bubble.get(), glm::vec2{ 0.f,1.f }, 10.f);
-	//auto BubbleMoveRight = std::make_unique<Move>(bubble.get(), glm::vec2{ 1.f,0.f }, 10.f);
-	//
-	//auto BobbleMoveUp = std::make_unique<Move>(bobble.get(), glm::vec2{ 0.f,-1.f }, 20.f);
-	//auto BobbleMoveLeft = std::make_unique<Move>(bobble.get(), glm::vec2{ -1.f,0.f }, 20.f);
-	//auto BobbleMoveDown = std::make_unique<Move>(bobble.get(), glm::vec2{ 0.f,1.f }, 20.f);
-	//auto BobbleMoveRight = std::make_unique<Move>(bobble.get(), glm::vec2{ 1.f,0.f }, 20.f);
-	//
-	//InputManager::AddKeyboardBinding(SDL_SCANCODE_W, std::move(BubbleMoveUp), TriggerType::down);
-	//InputManager::AddKeyboardBinding(SDL_SCANCODE_A, std::move(BubbleMoveLeft), TriggerType::down);
-	//InputManager::AddKeyboardBinding(SDL_SCANCODE_S, std::move(BubbleMoveDown), TriggerType::down);
-	//InputManager::AddKeyboardBinding(SDL_SCANCODE_D, std::move(BubbleMoveRight), TriggerType::down);
-	//
-	//InputManager::AddGamepadBinding(0, GamepadButton::DPAD_UP, std::move(BobbleMoveUp), TriggerType::down);
-	//InputManager::AddGamepadBinding(0, GamepadButton::DPAD_RIGHT, std::move(BobbleMoveRight), TriggerType::down);
-	//InputManager::AddGamepadBinding(0, GamepadButton::DPAD_DOWN, std::move(BobbleMoveDown), TriggerType::down);
-	//InputManager::AddGamepadBinding(0, GamepadButton::DPAD_LEFT, std::move(BobbleMoveLeft), TriggerType::down);
-	
-	//scene.Add(std::move(backGround));
-	//scene.Add(std::move(daeLogo));
-	//scene.Add(std::move(title));
+	auto blinky = std::make_unique<GameObject>();
+	blinky->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("blinky.png"));
 
+	auto pinky = std::make_unique<GameObject>();
+	pinky->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("pinky.png"));
 
-	scene.Add(std::move(maze));
+	auto inky = std::make_unique<GameObject>();
+	inky->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("inky.png"));
+
+	auto sue = std::make_unique<GameObject>();
+	sue->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("sue.png"));
+
+	Level testLevel(ResourceManager::GetDataPath(), &scene,msPacman.get(),blinky.get(),pinky.get(),inky.get(),sue.get());
+
 	scene.Add(std::move(msPacman));
-	scene.Add(std::move(fpsCounter));
-	scene.Add(std::move(testPellet));
+	scene.Add(std::move(blinky));
+	scene.Add(std::move(pinky));
+	scene.Add(std::move(inky));
+	scene.Add(std::move(sue));
+
+
 }
 
 int SDL_main(int, char* []) {

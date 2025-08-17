@@ -5,11 +5,8 @@
 #include <SDl_pixels.h>
 #include "Event.h"
 #include <glm.hpp>
+#include "rect.h"
 
-struct rect
-{
-	float left, top, right, bottom;
-};
 
 class CollisionRect : public Component
 {

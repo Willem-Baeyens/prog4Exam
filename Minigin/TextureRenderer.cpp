@@ -7,6 +7,15 @@ TextureRenderer::TextureRenderer(Texture2D* texturePtr,GameObject* ownerPtr) :
 	Component(ownerPtr),
 	m_TexturePtr{ texturePtr }
 {
+	assert(m_TexturePtr);
+}
+
+void TextureRenderer::ChangeTexture(Texture2D* texturePtr)
+{
+	if (texturePtr)
+	{
+		m_TexturePtr = texturePtr;
+	}
 }
 
 void TextureRenderer::Render()

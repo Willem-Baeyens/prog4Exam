@@ -33,6 +33,9 @@
     <ClCompile Include="ChangeDirection.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PacmanMovement.h">
@@ -43,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="ChangeDirection.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

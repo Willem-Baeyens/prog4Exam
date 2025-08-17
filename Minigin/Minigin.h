@@ -5,10 +5,12 @@
 #include <string>
 #include <functional>
 
+struct SDL_Window;
+
 class Minigin
 {
 public:
-	explicit Minigin(const std::string& dataPath);
+	explicit Minigin(const std::string& dataPath,int screenWidth, int screenHeight,float renderScale);
 	~Minigin() noexcept;
 	void Run(const std::function<void()>& load);
 

@@ -24,6 +24,11 @@ namespace ResourceManager
 		}
 	}
 
+	std::filesystem::path GetDataPath()
+	{
+		return DataPath;
+	}
+
 	Texture2D* LoadTexture(const std::string& file)
 	{
 		const auto fullPath = DataPath / file;

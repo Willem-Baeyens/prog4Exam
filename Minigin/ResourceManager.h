@@ -13,6 +13,8 @@ namespace ResourceManager
 {
 	void Initiliaze(const std::filesystem::path& data);
 
+	std::filesystem::path GetDataPath();
+
 	Texture2D* LoadTexture(const std::string& file);
 	Font* LoadFont(const std::string& file, uint8_t size);
 }

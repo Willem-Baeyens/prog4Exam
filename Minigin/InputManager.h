@@ -3,7 +3,7 @@
 
 #include "Gamepad.h"
 #include <memory>
-
+class UI;
 namespace InputManager
 {
 	void Initialize();

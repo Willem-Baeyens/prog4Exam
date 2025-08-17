@@ -27,7 +27,7 @@ namespace Renderer
 	static SDL_Window* Window{};
 	static SDL_Color ClearColor{};
 
-	void Initialize(SDL_Window* window)
+	void Initialize(SDL_Window* window,float scale)
 	{
 		Window = window;
 		Renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED);
@@ -35,6 +35,8 @@ namespace Renderer
 		{
 			throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 		}
+
+		SDL_RenderSetScale(Renderer, scale, scale);
 	}
 
 	void Render()
@@ -74,6 +76,13 @@ namespace Renderer
 		dst.w = static_cast<int>(width);
 		dst.h = static_cast<int>(height);
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+	}
+
+	std::pair<float, float> GetScale()
+	{
+		float scaleX, scaleY;
+		SDL_RenderGetScale(Renderer, &scaleX, &scaleY);
+		return std::make_pair(scaleX,scaleY);
 	}
 
 	void DrawRect(const rect& rect)

@@ -12,6 +12,7 @@ class TextureRenderer final : public Component
 public:
 	TextureRenderer(Texture2D* texturePtr,GameObject* ownerPtr);
 
+	void ChangeTexture(Texture2D* texturePtr);
 	void Render() override;
 private:
 	Texture2D*	m_TexturePtr;

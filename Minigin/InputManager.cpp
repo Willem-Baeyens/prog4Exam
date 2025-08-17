@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <vector>
 #include <array>
+#include "UI.h"
+#include "UIManager.h"
+#include "Renderer.h"
 
 namespace InputManager
 {
@@ -13,7 +16,6 @@ namespace InputManager
 	static std::vector<bool> KeysDown{};
 
 	static std::array<Gamepad, 2> GamePads{};
-
 	void Initialize()
 	{
 		GamePads = { Gamepad(0),Gamepad(1) };
@@ -53,6 +55,33 @@ namespace InputManager
 		
 				KeysDown[e.key.keysym.scancode] = false;
 			}
+
+			UI* activeUI = UIManager::GetActiveUI();
+
+			if (activeUI)
+			{
+				std::pair<float, float> scale = Renderer::GetScale();
+				e.button.x = static_cast<Sint32>( static_cast<float>(e.button.x) / scale.first);
+				e.button.y = static_cast<Sint32>(static_cast<float>(e.button.y) / scale.second);
+
+				if (e.type == SDL_MOUSEBUTTONDOWN)
+				{
+					activeUI->OnMouseButtonDown(e.button);
+				}
+
+				if (e.type == SDL_MOUSEBUTTONUP)
+				{
+
+					activeUI->OnMouseButtonUp(e.button);
+				}
+
+				if (e.type == SDL_MOUSEMOTION)
+				{
+					activeUI->OnMouseMotion(e.motion);
+				}
+			}
+
+
 		}
 		
 
@@ -93,6 +122,7 @@ namespace InputManager
 	{
 		GamePads[controllerID].AddBinding(button, std::move(command), trigger);
 	}
+
 }
 
 

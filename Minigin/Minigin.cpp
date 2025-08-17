@@ -17,7 +17,7 @@
 #include "SoundSystem.h"
 #include "CollisionManager.h"
 
-Minigin::Minigin(const std::string &dataPath)
+Minigin::Minigin(const std::string& dataPath, int screenWidth, int screenHeight, float renderScale)
 {
 	
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
@@ -29,8 +29,8 @@ Minigin::Minigin(const std::string &dataPath)
 		"Programming 4 assignment - 2DAE10 Willem Baeyens",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		224,
-		400,
+		screenWidth,
+		screenHeight,
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr) 
@@ -38,7 +38,7 @@ Minigin::Minigin(const std::string &dataPath)
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::Initialize(m_Window);
+	Renderer::Initialize(m_Window,renderScale);
 
 	InputManager::Initialize();
 
@@ -47,6 +47,7 @@ Minigin::Minigin(const std::string &dataPath)
 	ServiceLocator::RegisterSoundSystem(std::make_unique<SDL_SoundSystem>());
 
 }
+
 
 Minigin::~Minigin() noexcept
 {

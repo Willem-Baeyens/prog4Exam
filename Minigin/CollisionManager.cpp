@@ -12,9 +12,10 @@ namespace CollisionManager
 		collisionRects.push_back(collisionRect);
 	}
 
-	void UnregisterRect(CollisionRect*)
+	void UnregisterRect(CollisionRect* collisionRect)
 	{
-		//collisionRects.erase(std::find(collisionRects.begin(), collisionRects.end(), collisionRect), collisionRects.end());
+		if (collisionRects.empty()) return;
+		std::erase(collisionRects, collisionRect);
 	}
 
 	void CheckCollisions()
@@ -34,11 +35,7 @@ namespace CollisionManager
 
 	bool AreOverlapping(const rect& rect1, const rect& rect2)
 	{
-		if (rect1.right < rect2.left) return false;
-		if (rect1.left > rect2.right) return false;
-		if (rect1.bottom < rect2.top) return false;
-		if (rect1.top > rect2.bottom) return false;
-		return true;
+		return !(rect1.right < rect2.left or rect1.left > rect2.right or rect1.bottom < rect2.top or rect1.top > rect2.bottom);
 	}
 
 }

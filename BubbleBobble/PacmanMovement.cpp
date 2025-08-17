@@ -35,9 +35,9 @@ void PacmanMovement::Turn(const glm::vec2& direction)
 	m_Direction = direction;
 }
 
-void PacmanMovement::TestOverlap(CollisionRect* collisionRect)
+void PacmanMovement::TestOverlap(CollisionRect*)
 {
-	std::cout << collisionRect->GetRect().left << "\n";
+
 }
 
 
