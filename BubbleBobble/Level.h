@@ -8,6 +8,16 @@ class GameObject;
 struct TilePos
 {
 	int x, y;
+
+	bool operator== (TilePos other)
+	{
+		return(x == other.x and y == other.y);
+	}
+
+	TilePos operator+(TilePos other)
+	{
+		return TilePos{ x + other.x,y + other.y };
+	}
 };
 
 enum class TileType : char
@@ -29,10 +39,20 @@ class Level final
 public:
 	explicit Level(const std::filesystem::path& path, Scene* scene,GameObject* player,GameObject* Blinky,GameObject* Pinky,GameObject* Inky, GameObject* Sue);
 
-private:
 	[[nodiscard]] glm::vec2 TilePosToWorldPos(TilePos tilePos) const;
+	
+
+	[[nodiscard]] bool IsWall(TilePos tilepos) const;
+private:
+	void ProcessTile(int tileIndex, TileType type, Scene* scene, GameObject* player, GameObject* Blinky, GameObject* Pinky, GameObject* Inky, GameObject* Sue);
+
+	void CreatePellet(TilePos tilePos, Scene* scene);
+
+	const int m_LevelWidth{ 28 };
 
 	glm::vec2 m_MazePos{};
+
+	std::vector<TilePos> m_WallTiles{};
 };
 #endif // !LEVEL_H
 

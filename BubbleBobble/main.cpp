@@ -23,23 +23,28 @@
 #include "ChangeDirection.h"
 #include "CollisionRect.h"
 #include "Level.h"
+#include "Game.h"
+#include "SpritesheetRenderer.h"
 
 void Load()
 {
 	auto& scene = SceneManager::CreateScene(SDBM_Hash("Demo"));
 	
-	//Font* LinguaFontPtr = ResourceManager::LoadFont("Lingua.otf", 24);
+	Font* EmulogicFontPtr = ResourceManager::LoadFont("emulogic.ttf", 8);
 
 	auto msPacman = std::make_unique<GameObject>();
-	msPacman->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("msPacman.png"));
+	msPacman->AddComponent<SpritesheetRenderer>(ResourceManager::LoadTexture("msPacmanSheetRight.png"), 4, .1f,false);
 	msPacman->SetWorldPosition(0, 100);
 	msPacman->AddComponent<CollisionRect>(0.f, 100.f, 16.f, 116.f);
-	msPacman->AddComponent<PacmanMovement>(glm::vec2{},50.f);
+	msPacman->AddComponent<PacmanMovement>(50.f);
 
-	auto pacmanTurnUp = std::make_unique<ChangeDirection>(msPacman.get(),glm::vec2{0,-1});
-	auto pacmanTurnLeft = std::make_unique<ChangeDirection>(msPacman.get(), glm::vec2{ -1,0 });
-	auto pacmanTurnDown = std::make_unique<ChangeDirection>(msPacman.get(), glm::vec2{ 0,1 });
-	auto pacmanTurnRight = std::make_unique<ChangeDirection>(msPacman.get(), glm::vec2{ 1,0 });
+	auto score = std::make_unique<GameObject>();
+	score->AddComponent<TextRenderer>("1 UP 570",EmulogicFontPtr);
+
+	auto pacmanTurnUp = std::make_unique<ChangeDirection>(msPacman.get(),TilePos{0,-1});
+	auto pacmanTurnLeft = std::make_unique<ChangeDirection>(msPacman.get(), TilePos{ -1,0 });
+	auto pacmanTurnDown = std::make_unique<ChangeDirection>(msPacman.get(), TilePos{ 0,1 });
+	auto pacmanTurnRight = std::make_unique<ChangeDirection>(msPacman.get(), TilePos{ 1,0 });
 
 	InputManager::AddKeyboardBinding(SDL_SCANCODE_W, std::move(pacmanTurnUp), TriggerType::down);
 	InputManager::AddKeyboardBinding(SDL_SCANCODE_A, std::move(pacmanTurnLeft), TriggerType::down);
@@ -58,19 +63,19 @@ void Load()
 	auto sue = std::make_unique<GameObject>();
 	sue->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("sue.png"));
 
-	Level testLevel(ResourceManager::GetDataPath(), &scene,msPacman.get(),blinky.get(),pinky.get(),inky.get(),sue.get());
+	auto testLevel = std::make_unique<Level>(ResourceManager::GetDataPath() / "levelOne.bin", &scene, msPacman.get(), blinky.get(), pinky.get(), inky.get(), sue.get());
+	Pacman::SetCurrentLevel(std::move(testLevel));
 
 	scene.Add(std::move(msPacman));
 	scene.Add(std::move(blinky));
 	scene.Add(std::move(pinky));
 	scene.Add(std::move(inky));
 	scene.Add(std::move(sue));
-
-
+	scene.Add(std::move(score));
 }
 
 int SDL_main(int, char* []) {
-	Minigin engine("../Data/");
+	Minigin engine("../Data/",448,800,2);
 	engine.Run(Load);
 	return 0;
 }

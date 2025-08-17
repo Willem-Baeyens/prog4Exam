@@ -18,7 +18,7 @@ CollisionRect::~CollisionRect()
 
 void CollisionRect::Render()
 {
-	if constexpr (true)
+	if constexpr (Renderer::DRAWDEBUG)
 	{
 		Renderer::DrawRect(m_Rect, m_DebugDrawColor);
 	}

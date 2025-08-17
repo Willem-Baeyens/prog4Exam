@@ -78,6 +78,13 @@ namespace Renderer
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 	}
 
+	void RenderTexture(const Texture2D& texture,float x,float y, const SDL_Rect& srcRect)
+	{
+		SDL_Rect dst{ static_cast<int>(x),static_cast<int>(y),srcRect.w,srcRect.h };
+		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &srcRect, &dst);
+	}
+
+
 	std::pair<float, float> GetScale()
 	{
 		float scaleX, scaleY;

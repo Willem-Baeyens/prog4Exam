@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\Minigin\Rotator.cpp" />
     <ClCompile Include="ChangeDirection.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PacmanMovement.cpp" />
@@ -28,6 +29,7 @@
   <ItemGroup>
     <ClInclude Include="..\Minigin\Rotator.h" />
     <ClInclude Include="ChangeDirection.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="PacmanMovement.h" />
   </ItemGroup>

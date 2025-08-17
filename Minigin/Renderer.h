@@ -6,6 +6,7 @@ struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Color;
 struct rect;
+struct SDL_Rect;
 
 namespace Renderer
 {
@@ -15,6 +16,7 @@ namespace Renderer
 
 	void RenderTexture(const Texture2D& texture, float x, float y);
 	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height);
+	void RenderTexture(const Texture2D& texture, float x, float y, const SDL_Rect& srcRect);
 
 	std::pair<float, float> GetScale();
 
@@ -25,6 +27,8 @@ namespace Renderer
 
 	const SDL_Color& GetBackgroundColor();
 	void SetBackgroundColor(const SDL_Color& color);
+
+	constexpr bool DRAWDEBUG{ true };
 }
 //TODO make vector of rendercomponents(not pointers) 
 #endif // !RENDERER_H
