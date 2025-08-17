@@ -125,7 +125,7 @@ namespace Pacman
 
 		Pacman::BindEvents(msPacman->GetComponent<PacmanController>());
 
-		for (int livedisplayIndex{}; livedisplayIndex < 4; ++livedisplayIndex)
+		for (int livedisplayIndex{}; livedisplayIndex < 3; ++livedisplayIndex)
 		{
 			auto liveDisplay = std::make_unique<GameObject>();
 			liveDisplay->AddComponent<TextureRenderer>(ResourceManager::LoadTexture("msPacman.png"));
