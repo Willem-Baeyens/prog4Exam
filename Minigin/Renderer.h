@@ -30,6 +30,5 @@ namespace Renderer
 
 	constexpr bool DRAWDEBUG{ true };
 }
-//TODO make vector of rendercomponents(not pointers) 
 #endif // !RENDERER_H
 

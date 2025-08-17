@@ -10,7 +10,8 @@
 #include "PelletController.h"
 #include "BlinkyController.h"
 
-Level::Level(const std::filesystem::path& path, Scene* scene, GameObject* player, GameObject* Blinky, GameObject* Pinky, GameObject* Inky, GameObject* Sue)
+Level::Level(const std::filesystem::path& path, Scene* scene, GameObject* player, GameObject* Blinky, GameObject* Pinky, GameObject* Inky, GameObject* Sue):
+	m_Player{player},m_Blinky{Blinky},m_Pinky{Pinky},m_Inky{Inky},m_Sue{Sue}
 {
 
 	m_MazePos = { 0,100 };
@@ -34,9 +35,9 @@ Level::Level(const std::filesystem::path& path, Scene* scene, GameObject* player
 		char doubleTile{};
 		fs.read(&doubleTile, 1);
 		TileType firstTile = static_cast<TileType>(doubleTile >> 4);
-		ProcessTile(tileIndex++, firstTile,scene,player,Blinky,Pinky,Inky,Sue);
+		ProcessTile(tileIndex++, firstTile,scene);
 		TileType secondTile = static_cast<TileType>(doubleTile & 0b00001111);
-		ProcessTile(tileIndex++, secondTile,scene,player,Blinky,Pinky,Inky,Sue);
+		ProcessTile(tileIndex++, secondTile,scene);
 	}
 
 	fs.close();
@@ -47,7 +48,21 @@ bool Level::IsWall(TilePos tilepos) const
 	return m_WallTiles[tilepos.x + tilepos.y*m_LevelWidth];
 }
 
-void Level::ProcessTile(int tileIndex, TileType type,Scene* scene, GameObject* player, GameObject* Blinky, GameObject* Pinky, GameObject* Inky, GameObject* Sue)
+void Level::SoftReset()
+{
+	m_Blinky->GetComponent<CollisionRect>()->MoveRect(m_BlinkyPos - m_Blinky->GetWorldPosition());
+	m_Blinky->SetWorldPosition(m_BlinkyPos);
+	m_Blinky->GetComponent<BlinkyController>()->SoftReset();
+	m_Blinky->GetComponent<BlinkyController>()->SetCurrentTile(m_BlinkyTile);
+
+	m_Player->GetComponent<PacmanMovement>()->SoftReset();
+	m_Player->GetComponent<CollisionRect>()->MoveRect(m_PlayerPos - m_Player->GetWorldPosition());
+	m_Player->SetWorldPosition(m_PlayerPos);
+	m_Player->GetComponent<PacmanMovement>()->SetStartPos(m_PlayerTile);
+
+}
+
+void Level::ProcessTile(int tileIndex, TileType type,Scene* scene)
 {
 	TilePos tilePos{ tileIndex % m_LevelWidth,tileIndex / m_LevelWidth };
 	switch (type)
@@ -65,22 +80,27 @@ void Level::ProcessTile(int tileIndex, TileType type,Scene* scene, GameObject* p
 	case TileType::pipe:
 		break;
 	case TileType::pacman:
-		player->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
-		player->GetComponent<PacmanMovement>()->SetStartPos(tilePos);
-		player->GetComponent<CollisionRect>()->MoveRect(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
+		m_PlayerPos = TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 };
+		m_PlayerTile = tilePos;
+		m_Player->SetWorldPosition(m_PlayerPos);
+		m_Player->GetComponent<PacmanMovement>()->SetStartPos(tilePos);
+		m_Player->GetComponent<CollisionRect>()->MoveRect(m_PlayerPos);
 		break;
 	case TileType::blinky:
-		Blinky->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
-		Blinky->GetComponent<BlinkyController>()->SetCurrentTile(tilePos);
+		m_BlinkyPos = TilePosToWorldPos(tilePos) + glm::vec2{ -4,-4 };
+		m_BlinkyTile = tilePos;
+		m_Blinky->SetWorldPosition(m_BlinkyPos);
+		m_Blinky->GetComponent<CollisionRect>()->MoveRect(m_BlinkyPos);
+		m_Blinky->GetComponent<BlinkyController>()->SetCurrentTile(tilePos);
 		break;
 	case TileType::pinky:
-		Pinky->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
+		m_Pinky->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
 		break;
 	case TileType::inky:
-		Inky->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
+		m_Inky->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
 		break;
 	case TileType::sue:
-		Sue->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
+		m_Sue->SetWorldPosition(TilePosToWorldPos(tilePos) + glm::vec2{ 0,-4 });
 		break;
 	}
 }

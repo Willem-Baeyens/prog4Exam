@@ -14,6 +14,8 @@ public:
 	~Minigin() noexcept;
 	void Run(const std::function<void()>& load);
 
+	void Pause();
+
 	Minigin(const Minigin& other) = delete;
 	Minigin(Minigin&& other) = delete;
 	Minigin& operator=(const Minigin& other) = delete;
@@ -22,5 +24,6 @@ public:
 private:
 	const float m_MaxFps{ 120.f };
 	SDL_Window* m_Window{};
+	bool m_Continue{ true };
 };
 #endif // !MINIGIN_H

@@ -61,13 +61,12 @@ void Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
-	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.0f;
 
 	std::chrono::duration<double, std::milli> MaxTimePerFrame{ static_cast<double>(std::milli().den) / static_cast<double>(m_MaxFps) };
 
-	while (doContinue)
+	while (m_Continue)
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
 		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
@@ -75,7 +74,7 @@ void Minigin::Run(const std::function<void()>& load)
 		lastTime = currentTime;
 		lag += deltaTime;
 
-		doContinue = InputManager::ProcessInput();
+		m_Continue = InputManager::ProcessInput();
 		while (lag >= Time::GetFixedDeltaTime())
 		{
 			SceneManager::FixedUpdate();
@@ -89,6 +88,11 @@ void Minigin::Run(const std::function<void()>& load)
 		const auto sleep_time = MaxTimePerFrame + currentTime - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleep_time);
 	}
+}
+
+void Minigin::Pause()
+{
+	m_Continue = false;
 }
 
 

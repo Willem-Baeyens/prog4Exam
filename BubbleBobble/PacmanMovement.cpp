@@ -139,6 +139,13 @@ TilePos PacmanMovement::GetCurrentTile() const
 	return m_CurrentTile;
 }
 
+void PacmanMovement::SoftReset()
+{
+	m_TargetPosition = { 1,0 };
+	m_TileDirection = {};
+	m_StoredTurn = {};
+}
+
 
 void PacmanMovement::Turn(const TilePos& direction)
 {

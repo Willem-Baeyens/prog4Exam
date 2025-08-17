@@ -20,6 +20,7 @@ public:
 
 	TilePos GetCurrentTile() const;
 
+	void SoftReset();
 private:
 	void Turn(const TilePos& direction);
 	void UpdateTargetPosition();

@@ -16,12 +16,20 @@ MultiEvent<>* PacmanController::GetPacmanEatsPelletEvent()
 	return &m_PacmanEatsPellet;
 }
 
+MultiEvent<>* PacmanController::GetPacmanDiesEvent()
+{
+	return &m_PacmanDies;
+}
+
 void PacmanController::OnOverlap(CollisionRect* collider)
 {
 	switch (collider->GetType())
 	{
 	case ColliderType::pellet:
 		m_PacmanEatsPellet.Broadcast();
+		break;
+	case ColliderType::ghost:
+		m_PacmanDies.Broadcast();
 		break;
 	}
 }

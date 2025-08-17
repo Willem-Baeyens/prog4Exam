@@ -45,8 +45,10 @@ public:
 	
 
 	[[nodiscard]] bool IsWall(TilePos tilepos) const;
+
+	void SoftReset();
 private:
-	void ProcessTile(int tileIndex, TileType type, Scene* scene, GameObject* player, GameObject* Blinky, GameObject* Pinky, GameObject* Inky, GameObject* Sue);
+	void ProcessTile(int tileIndex, TileType type, Scene* scene);
 
 	void CreatePellet(TilePos tilePos, Scene* scene);
 
@@ -54,6 +56,18 @@ private:
 	int m_PelletsRemaining{};
 
 	glm::vec2 m_MazePos{};
+	glm::vec2 m_BlinkyPos{};
+	glm::vec2 m_PlayerPos{};
+
+	TilePos m_PlayerTile{};
+	TilePos m_BlinkyTile{};
+
+	GameObject* m_Player{};
+	GameObject* m_Blinky{};
+	GameObject* m_Pinky{};
+	GameObject* m_Inky{};
+	GameObject* m_Sue{};
+
 
 	std::vector<bool> m_WallTiles{};
 };

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\Minigin\Rotator.cpp" />
     <ClCompile Include="BlinkyController.cpp" />
+    <ClCompile Include="GhostController.cpp" />
     <ClCompile Include="ChangeDirection.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <ClInclude Include="..\Minigin\Rotator.h" />
     <ClInclude Include="BlinkyController.h" />
+    <ClInclude Include="GhostController.h" />
     <ClInclude Include="ChangeDirection.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Level.h" />

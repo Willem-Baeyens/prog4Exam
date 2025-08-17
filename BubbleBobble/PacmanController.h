@@ -9,10 +9,13 @@ public:
 	explicit PacmanController(GameObject* owner);
 
 	MultiEvent<>* GetPacmanEatsPelletEvent();
+	MultiEvent<>* GetPacmanDiesEvent();
+
 
 private:
 	void OnOverlap(CollisionRect* collider);
 	MultiEvent<> m_PacmanEatsPellet{};
+	MultiEvent<> m_PacmanDies{};
 
 };
 #endif //PACMAN_CONTROLLER_H

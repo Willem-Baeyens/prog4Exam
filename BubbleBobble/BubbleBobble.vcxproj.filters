@@ -48,6 +48,9 @@
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GhostController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
     <ClCompile Include="BlinkyController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostController.h">
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="BlinkyController.h">
       <Filter>Components</Filter>
